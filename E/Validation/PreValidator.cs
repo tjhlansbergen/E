@@ -25,7 +25,7 @@ namespace E.Validation
             // divert output if requested
             if(outputChannel != null) Console.SetOut(outputChannel);
 
-            var cleanLines = _clean(lines);
+            var cleanLines = _cleanCopy(lines);
             var results = new ConcurrentBag<ValidationStepResult>();
 
             // run steps in parallel
@@ -46,24 +46,26 @@ namespace E.Validation
             return results.All(r => r.Valid);
         }
 
-        private static string[] _clean(string[] lines)
+        private static string[] _cleanCopy(string[] lines)
         {
+            var cleanLines = (string[])lines.Clone();
+
             //strip comments and stuff between double quotes
             var regex = new Regex("\"([^\"]*)\"");
 
-            for (int i = 0; i < lines.Length; i++)
+            for (int i = 0; i < cleanLines.Length; i++)
             {
                 //remove indentation
-                lines[i] = lines[i].Trim();
+                cleanLines[i] = cleanLines[i].Trim();
 
                 //empty line if it is a comment
-                if (lines[i].StartsWith("//")) lines[i] = string.Empty;
+                if (cleanLines[i].StartsWith("//")) cleanLines[i] = string.Empty;
 
                 //remove text between double quotes
-                lines[i] = regex.Replace(lines[i], "\"\"");
+                cleanLines[i] = regex.Replace(cleanLines[i], "\"\"");
             }
 
-            return lines;
+            return cleanLines;
         }
     }
 }

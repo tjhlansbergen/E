@@ -5,13 +5,18 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using E.EObjects;
+using E.Tokenization;
 
 namespace E
 {
     internal class EInterpreter
     {
+        public bool Verbose { get; set; } = true;
+
         private string _path;
         private string[] _lines;
+        private ETree _tree;
 
         public void Go(string path)
         {
@@ -39,7 +44,7 @@ namespace E
                 _lines = File.ReadAllLines(_path);
 
                 PreValidate();
-                // Tokenize()
+                Tokenize();
                 // PostValidate()
                 // Run()
 
@@ -54,7 +59,7 @@ namespace E
 
         private void PreValidate()
         {
-            Console.WriteLine("\nPre-validation:");
+            Console.WriteLine("\nPre-validation");
             var preValidationResult = new PreValidator(new List<IPreValidationStep>
             {
                 new HasValidLineEndsStep(),
@@ -63,11 +68,24 @@ namespace E
                 new ContainsProgramUtility(),
                 new ContainsStartFunction(),
                 new BlockOpeningsOk(),
-                new BlockDeclarationsOk()
-            }).Validate(_lines, true);
+                new BlockDeclarationsOk(),
+                new ConstantsOk()
+            }).Validate(_lines, Verbose);
 
             Console.WriteLine();
             Console.WriteLine(preValidationResult ? $"Pre-validation for {_path} successful" : $"Pre-validation for {_path} failed!");
         }
+
+        private void Tokenize()
+        {
+            Console.WriteLine("\nTokenization");
+            _tree = new Lexer().GetTree(_lines);
+
+            if (Verbose)
+            {
+                Console.WriteLine(_tree.Summarize());
+            }
+        }
+
     }
 }

@@ -192,4 +192,43 @@ namespace E.Validation
             }
         }
     }
+
+    public class ConstantsOk : IPreValidationStep
+    {
+        public ValidationStepResult Execute(string[] lines)
+        {
+            var errors = new List<int>();
+            var constants = lines.Where(ln => ln.StartsWith("Constant ")).ToArray();
+
+
+            for(int i = 0; i < constants.Length; i++)
+            {
+                if (!constants[i].Contains("="))
+                {
+                    errors.Add(i + 1);
+                    continue;
+                }
+
+                if (constants[i].SplitClean('=').Length != 2)
+                {
+                    errors.Add(i + 1);
+                    continue;
+                }
+
+                if (constants[i].SplitClean('=')[0].SplitClean(' ').Length != 3)
+                {
+                    errors.Add(i + 1);
+                }
+            }
+
+            if (!errors.Any())
+            {
+                return new ValidationStepResult(true, "All Constant declarations are OK");
+            }
+            else
+            {
+                return new ValidationStepResult(false, $"Improper Constant declaration on line(s): {string.Join(" ", errors)}");
+            }
+        }
+    }
 }
