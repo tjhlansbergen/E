@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using E.EObjects;
-using E.Tokenization;
 
 namespace E
 {
@@ -44,7 +43,7 @@ namespace E
                 _lines = File.ReadAllLines(_path);
 
                 PreValidate();
-                Tokenize();
+                Lex();
                 // PostValidate()
                 // Run()
 
@@ -76,15 +75,10 @@ namespace E
             Console.WriteLine(preValidationResult ? $"Pre-validation for {_path} successful" : $"Pre-validation for {_path} failed!");
         }
 
-        private void Tokenize()
+        private void Lex()
         {
-            Console.WriteLine("\nTokenization");
-            _tree = new Lexer().GetTree(_lines);
-
-            if (Verbose)
-            {
-                Console.WriteLine(_tree.Summarize());
-            }
+            Console.WriteLine("\nLexing");
+            _tree = new Lexer.Lexer().GetTree(_lines, Verbose);
         }
 
     }

@@ -46,11 +46,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EInterpreter.cs" />
-    <Compile Include="EObjects\Variables\EVariable.cs" />
+    <Compile Include="Enums.cs" />
+    <Compile Include="EElements\EElement.cs" />
+    <Compile Include="EElements\EVariable.cs" />
     <Compile Include="ExtensionsMethods.cs" />
     <Compile Include="Helpers.cs" />
-    <Compile Include="EObjects\ETree.cs" />
-    <Compile Include="Tokenization\Lexer.cs" />
+    <Compile Include="Lexer\ETree.cs" />
+    <Compile Include="Lexer\EToken.cs" />
+    <Compile Include="Lexer\Lexer.cs" />
+    <Compile Include="Lexer\Parser.cs" />
+    <Compile Include="Lexer\Tokenizer.cs" />
     <Compile Include="Validation\IValidator.cs" />
     <Compile Include="Validation\PreValidationSteps.cs" />
     <Compile Include="Validation\PreValidator.cs" />
