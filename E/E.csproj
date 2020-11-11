@@ -55,6 +55,7 @@
     <Compile Include="Lexer\EToken.cs" />
     <Compile Include="Lexer\Lexer.cs" />
     <Compile Include="Lexer\Parser.cs" />
+    <Compile Include="Lexer\Parsers.cs" />
     <Compile Include="Lexer\Tokenizer.cs" />
     <Compile Include="Validation\IValidator.cs" />
     <Compile Include="Validation\PreValidationSteps.cs" />

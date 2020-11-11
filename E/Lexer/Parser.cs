@@ -15,6 +15,8 @@ namespace E.Lexer
         private string curNamespace = string.Empty;
         private ELevel curLevel = ELevel.ROOT;
 
+        public List<string> Warnings { get; set; } = new List<string>();
+
         /// <summary>
         /// Build a ETree out of a list of ETokens
         /// </summary>
@@ -40,36 +42,24 @@ namespace E.Lexer
             switch (token.Type)
             {
                 case ETokenType.CONSTANT:
-                    if (_parseVariable(token.Line.Remove(0, 9), out var result))
-                    {
-                        tree.Constants.Add(result);
-                    }
-                    else
-                    {
-                        // WARNING
-                    }
-
+                    _handleConstant(token, tree);
                     break;
                 default:
-                    // WARNING
+                    Warnings.Add($"Unhandled token type {token.Type} at line: {token.LineNumber}, this line will be ignored!");
                     return;
             }
         }
 
-        private bool _parseVariable(string line, out EVariable result)
+        private void _handleConstant(EToken token, ETree tree)
         {
-            try
+            if (Parsers.ParseVariable(curNamespace, token.Line.Remove(0, 9), out var result, true))
             {
-                var left = line.SplitClean('=')[0];
-                var right = line.SplitClean('=')[1];
-                result = EVariable.New(left.SplitClean(' ')[0], left.SplitClean(' ')[1], right.Split(';')[0]);
+                tree.Constants.Add(result);
             }
-            catch (Exception ex)
+            else
             {
-                result = null;
+                Warnings.Add($"Unparsable constant at line: {token.LineNumber}, this constant will be ignored!");
             }
-
-            return result != null;
         }
     }
 }

@@ -33,7 +33,11 @@ namespace E.Lexer
             }
 
             // parse
-            var tree = new Parser().Parse(tokens);
+            var parser = new Parser();
+            var tree = parser.Parse(tokens);
+
+            parser.Warnings.ForEach(w => Helpers.WriteColoredLine(" - " + w, false));
+            Console.WriteLine();
 
             if (verbose)
             {
@@ -41,7 +45,6 @@ namespace E.Lexer
                 Console.WriteLine();
             }
 
-            // TODO
             return tree;
         }
     }

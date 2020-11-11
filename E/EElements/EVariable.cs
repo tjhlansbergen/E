@@ -32,7 +32,7 @@
         }
 
 
-        public static EVariable New(string type, string name, string value, bool constant = false)
+        public static EVariable New(string type, string name, string value, bool constant)
         {
             return type.ToLowerInvariant() switch
             {
