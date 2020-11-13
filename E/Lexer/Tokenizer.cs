@@ -82,6 +82,13 @@ namespace E.Lexer
                         }
 
                         break;
+                    case ETokenType.PROPERTY:
+                        if (line.StartsWith("Property"))
+                        {
+                            return new EToken(linenr, ETokenType.PROPERTY, line);
+                        }
+
+                        break;
                     case ETokenType.UTILITY:
                         if (line.StartsWith("Utility"))
                         {
@@ -96,29 +103,22 @@ namespace E.Lexer
                         }
 
                         break;
-                    case ETokenType.DECLARATION:
-                        if (_isDeclaration(line))
+                    case ETokenType.INITIALIZATION:
+                        if (line.StartsWith("new"))
                         {
-                            return new EToken(linenr, ETokenType.DECLARATION, line);
-                        }
-
-                        break;
-                    case ETokenType.FUNCTION_ASSIGNMENT:
-                        if (_isFunctionAssignment(line))
-                        {
-                            return new EToken(linenr, ETokenType.FUNCTION_ASSIGNMENT, line);
+                            return new EToken(linenr, ETokenType.INITIALIZATION, line);
                         }
 
                         break;
                     case ETokenType.FUNCTION_CALL:
-                        if (_isFunctionCall(line))
+                        if (line.SplitClean(':').Length == 2)
                         {
                             return new EToken(linenr, ETokenType.FUNCTION_CALL, line);
                         }
 
                         break;
                     case ETokenType.FUNCTION_STATEMENT:
-                        if (_isFunctionStatement(line))
+                        if (line.SplitClean('(').Length > 1 && Enum.TryParse<EStatementType>(line.SplitClean('(')[0], true, out _))
                         {
                             return new EToken(linenr, ETokenType.FUNCTION_STATEMENT, line);
                         }
@@ -137,27 +137,6 @@ namespace E.Lexer
             }
 
             return null;
-        }
-
-
-        private bool _isDeclaration(string line)
-        {
-            return line.SplitClean(' ').Length == 2;
-        }
-
-        private bool _isFunctionAssignment(string line)
-        {
-            return line.SplitClean('=').Length == 2;
-        }
-
-        private bool _isFunctionCall(string line)
-        {
-            return line.SplitClean(':').Length == 2;
-        }
-
-        private bool _isFunctionStatement(string line)
-        {
-            return line.SplitClean(' ').Length > 1 && Enum.TryParse<EStatement>(line.SplitClean(' ')[0], true, out _);
         }
     }
 }

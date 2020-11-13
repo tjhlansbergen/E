@@ -68,7 +68,8 @@ namespace E
                 new ContainsStartFunction(),
                 new BlockOpeningsOk(),
                 new BlockDeclarationsOk(),
-                new ConstantsOk()
+                new ConstantsOk(),
+                new PropertiesOk()
             }).Validate(_lines, Verbose);
 
             Console.WriteLine();
@@ -80,6 +81,5 @@ namespace E
             Console.WriteLine("\nLexing");
             _tree = new Lexer.Lexer().GetTree(_lines, Verbose);
         }
-
     }
 }

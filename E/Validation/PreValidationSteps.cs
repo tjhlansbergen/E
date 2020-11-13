@@ -198,8 +198,7 @@ namespace E.Validation
         public ValidationStepResult Execute(string[] lines)
         {
             var errors = new List<int>();
-            var constants = lines.Where(ln => ln.StartsWith("Constant ")).ToArray();
-
+            var constants = lines.Where(ln => ln.StartsWith("Constant")).ToArray();
 
             for(int i = 0; i < constants.Length; i++)
             {
@@ -228,6 +227,32 @@ namespace E.Validation
             else
             {
                 return new ValidationStepResult(false, $"Improper Constant declaration on line(s): {string.Join(" ", errors)}");
+            }
+        }
+    }
+
+    public class PropertiesOk : IPreValidationStep
+    {
+        public ValidationStepResult Execute(string[] lines)
+        {
+            var errors = new List<int>();
+            var props = lines.Where(ln => ln.StartsWith("Property")).ToArray();
+
+            for (int i = 0; i < props.Length; i++)
+            {
+                if (props[i].SplitClean(' ').Length != 3)
+                {
+                    errors.Add(i + 1);
+                }
+            }
+
+            if (!errors.Any())
+            {
+                return new ValidationStepResult(true, "All Property declarations are OK");
+            }
+            else
+            {
+                return new ValidationStepResult(false, $"Improper Property declaration on line(s): {string.Join(" ", errors)}");
             }
         }
     }

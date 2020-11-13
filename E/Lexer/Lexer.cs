@@ -36,10 +36,9 @@ namespace E.Lexer
             var parser = new Parser();
             var tree = parser.Parse(tokens);
 
-            parser.Warnings.ForEach(w => Helpers.WriteColoredLine(" - " + w, false));
             Console.WriteLine();
 
-            if (verbose)
+            if (tree != null && verbose)
             {
                 Console.WriteLine(tree.Summarize());
                 Console.WriteLine();

@@ -19,25 +19,26 @@ namespace E
         OBJECT = 5,
         UTILITY = 6,
         FUNCTION = 7,
-        DECLARATION = 8,
-        FUNCTION_ASSIGNMENT = 9,
+        PROPERTY = 8,
+        INITIALIZATION = 9,
         FUNCTION_CALL = 10,
         FUNCTION_STATEMENT = 11,     //if, for, etc...
         FUNCTION_RETURN = 12
         ,
     }
 
-    public enum EStatement
+    public enum EType
     {
-        IF,
-        FOR
+        BOOLEAN,
+        TEXT,
+        NUMBER,
+        LIST,
+        USER_DEFINED
     }
 
-    public enum ELevel
+    public enum EStatementType
     {
-        ROOT,
-        UTILITY,
-        OBJECT,
-        FUNCTION
+        IF,
+        FOREACH
     }
 }
