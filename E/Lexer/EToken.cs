@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EInterpreter.Lexer
 {
-    class EToken
+    public class EToken
     {
         public int LineNumber { get; }
         public ETokenType Type { get; }

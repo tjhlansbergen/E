@@ -13,7 +13,7 @@ namespace EInterpreter.Lexer
     /// <summary>
     /// Responsible for parsing a list of tokens into an Abstract Source Tree
     /// </summary>
-    class Parser
+    public class Parser
     {
         private Stack<EElement> _callStack = new Stack<EElement>();
 
@@ -74,7 +74,7 @@ namespace EInterpreter.Lexer
                     _handleUtility(token, tree);
                     break;
                 case ETokenType.FUNCTION:
-                    _handleFunction(token, tree);
+                    _handleFunction(token);
                     break;
                 case ETokenType.FUNCTION_STATEMENT:
                     _handleStatement(token);
@@ -130,7 +130,7 @@ namespace EInterpreter.Lexer
             _callStack.Push(utility);
         }
 
-        private void _handleFunction(EToken token, ETree tree)
+        private void _handleFunction(EToken token)
         {
             if (_callStack.Any() && _callStack.Peek() is EUtility util)
             {

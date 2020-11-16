@@ -44,9 +44,6 @@ namespace EInterpreter.Validation
         {
             var code = string.Join(string.Empty, lines);
 
-            var len = code.Length;
-            var test = code.Replace("\"", "").Length;
-
             var quotesComplete = (code.Length - code.Replace("\"", "").Length) % 2 == 0;
 
             return new ValidationStepResult(quotesComplete, quotesComplete ? "All quotes (\"\") are closed" : "Not all quotes (\"\") are closed");

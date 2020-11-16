@@ -8,7 +8,7 @@ namespace EInterpreter.Lexer
     /// <summary>
     /// The lexer is responsible for tokenizing and parsing E source code
     /// </summary>
-    class Lexer
+    public class Lexer
     {
 
         /// <summary>
@@ -16,7 +16,6 @@ namespace EInterpreter.Lexer
         /// </summary>
         /// <param name="lines">Order array of lines of E source code</param>
         /// <param name="verbose">Sets whether or not to print output</param>
-        /// <param name="outputChannel">optional, set a custom output channel, when not set, this default to Console</param>
         /// <returns></returns>
         public ETree GetTree(string[] lines, bool verbose)
         {
