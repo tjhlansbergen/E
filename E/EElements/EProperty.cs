@@ -3,22 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using E.EObjects;
+using EInterpreter.EObjects;
 
-namespace E.EElements
+namespace EInterpreter.EElements
 {
     public class EProperty : EElement
     {
-        public EType Type { get; }
-        public string UserType { get; }
+        public string Type { get; }
 
         public EProperty(string type, string name) : base(name)
         {
-            Type = Enum.TryParse<EType>(type, true, out var result) ? result : EType.USER_DEFINED;
-            if (Type == EType.USER_DEFINED)
-            {
-                UserType = type; 
-            }
+             Type = type;
         }
     }
 }

@@ -1,13 +1,14 @@
 ﻿using System;
 using System.CodeDom;
-using E.EObjects;
 using System.Collections.Generic;
 using System.ComponentModel.Design.Serialization;
 using System.Linq;
-using E.EElements;
+using System.Runtime.InteropServices.ComTypes;
+using EInterpreter.EElements;
+using EInterpreter.EObjects;
 
 
-namespace E.Lexer
+namespace EInterpreter.Lexer
 {
     /// <summary>
     /// Responsible for parsing a list of tokens into an Abstract Source Tree
@@ -36,7 +37,7 @@ namespace E.Lexer
             }
             catch (ParserException pex)
             {
-                Helpers.WriteColoredLine(pex.Message, false);
+                ExtensionMethods.WriteColoredLine(pex.Message, false);
                 return null;
             }
 
@@ -78,8 +79,8 @@ namespace E.Lexer
                 case ETokenType.FUNCTION_STATEMENT:
                     _handleStatement(token);
                     break;
-                case ETokenType.INITIALIZATION:
-                    _handleInitialization(token);
+                case ETokenType.DECLARATION:
+                    _handleDeclaration(token);
                     break;
                 case ETokenType.FUNCTION_CALL:
                     _handleFunctionCall(token);
@@ -87,9 +88,8 @@ namespace E.Lexer
                 case ETokenType.FUNCTION_RETURN:
                     _handleFunctionReturn(token);
                     break;
-                default:    // REENABLE!
+                default:
                     throw new ParserException($"Unhandled token type {token.Type} at line: {token.LineNumber}");
-                    break;
             }
         }
 
@@ -100,55 +100,47 @@ namespace E.Lexer
 
         private void _handleConstant(EToken token, ETree tree)
         {
-            if (Parsers.ParseVariable(token.Line, out var result, true))
-            {
-                tree.Constants.Add(result);
-            }
-            else
-            {
-                throw new ParserException(_unparsebleMessage("constant", token.LineNumber));
-            }
+            EConstant constant;
+
+            try { constant = Parsers.ParseConstant(token.Line); }
+            catch { throw new ParserException(_unparsebleMessage("constant", token.LineNumber)); }
+
+            tree.Constants.Add(constant);
         }
 
         private void _handleObject(EToken token, ETree tree)
         {
-            if (Parsers.ParseObject(_getNamespac(), token.Line, out var result))
-            {
-                tree.Objects.Add(result);
-                _callStack.Push(result);
-            }
-            else
-            {
-                throw new ParserException(_unparsebleMessage("object", token.LineNumber));
-            }
+            EObject objct;
+
+            try { objct = Parsers.ParseObject(_getNamespac(), token.Line); }
+            catch { throw new ParserException(_unparsebleMessage("object", token.LineNumber)); }
+
+            tree.Objects.Add(objct);
+            _callStack.Push(objct);
         }
 
         private void _handleUtility(EToken token, ETree tree)
         {
-            if (Parsers.ParseUtility(_getNamespac(), token.Line, out var result))
-            {
-                tree.Utilities.Add(result);
-                _callStack.Push(result);
-            }
-            else
-            {
-                throw new ParserException(_unparsebleMessage("utility", token.LineNumber));
-            }
+            EUtility utility;
+
+            try { utility = Parsers.ParseUtility(_getNamespac(), token.Line); }
+            catch { throw new ParserException(_unparsebleMessage("utility", token.LineNumber)); }
+
+            tree.Utilities.Add(utility);
+            _callStack.Push(utility);
         }
 
         private void _handleFunction(EToken token, ETree tree)
         {
             if (_callStack.Any() && _callStack.Peek() is EUtility util)
             {
-                if (Parsers.ParseFunction(_getNamespac(), token.Line, out var result))
-                {
-                    util.Functions.Add(result);
-                    _callStack.Push(result);
-                }
-                else
-                {
-                    throw new ParserException(_unparsebleMessage("function", token.LineNumber));
-                }
+                EFunction function;
+
+                try { function = Parsers.ParseFunction(_getNamespac(), token.Line); }
+                catch { throw new ParserException(_unparsebleMessage("function", token.LineNumber)); }
+
+                util.Functions.Add(function);
+                _callStack.Push(function);
             }
             else
             {
@@ -160,15 +152,13 @@ namespace E.Lexer
         {
             if (_callStack.Any() && _callStack.Peek() is EFunction func)
             {
-                if (Parsers.ParseStatement(token.Line, out var result))
-                {
-                    func.Statements.Add(result);
-                    _callStack.Push(result);
-                }
-                else
-                {
-                    throw new ParserException(_unparsebleMessage("statement", token.LineNumber));
-                }
+                EStatement statement;
+
+                try { statement = Parsers.ParseStatement(token.Line); }
+                catch { throw new ParserException(_unparsebleMessage("statement", token.LineNumber)); }
+
+                func.Statements.Add(statement);
+                _callStack.Push(statement);
             }
             else
             {
@@ -176,28 +166,45 @@ namespace E.Lexer
             }
         }
 
-        private void _handleInitialization(EToken token)
+        private void _handleDeclaration(EToken token)
         {
             if (_callStack.Any() && _callStack.Peek() is EFunction func)
             {
-                if (Parsers.ParseNew(token.Line, out var result))
-                {
-                    func.Inits.Add(result);
-                }
-                else
-                {
-                    throw new ParserException(_unparsebleMessage("object initialization", token.LineNumber));
-                }
+                EDeclaration init;
+
+                try { init = Parsers.ParseInit(token.Line); }
+                catch { throw new ParserException(_unparsebleMessage("object declaration", token.LineNumber)); }
+
+                func.Declarations.Add(init);
             }
             else
             {
-                throw new ParserException(_unexpectedMessage("object initialization", token.LineNumber));
+                throw new ParserException(_unexpectedMessage("object declaration", token.LineNumber));
             }
         }
 
         private void _handleFunctionCall(EToken token)
         {
-            // TODO
+            if (_callStack.Any() && (_callStack.Peek() is EFunction || _callStack.Peek() is EStatement))
+            {
+                EFunctionCall call;
+
+                try { call = Parsers.ParseFunctionCall(token.Line); }
+                catch { throw new ParserException(_unparsebleMessage("function call", token.LineNumber)); }
+
+                if (_callStack.Peek() is EFunction func)
+                {
+                    func.Calls.Add(call);
+                }
+                else if (_callStack.Peek() is EStatement stat)
+                {
+                    stat.Calls.Add(call);
+                }
+            }
+            else
+            {
+                throw new ParserException(_unexpectedMessage("function call", token.LineNumber));
+            }
         }
 
         private void _handleFunctionReturn(EToken token)
@@ -209,14 +216,12 @@ namespace E.Lexer
         {
             if (_callStack.Any() && _callStack.Peek() is EObject obj)
             {
-                if (Parsers.ParseProperty(token.Line, out var result))
-                {
-                    obj.Properties.Add(result);
-                }
-                else
-                {
-                    throw new ParserException(_unparsebleMessage("property", token.LineNumber));
-                }
+                EProperty prop;
+
+                try { prop = Parsers.ParseProperty(token.Line); }
+                catch { throw new ParserException(_unparsebleMessage("property", token.LineNumber)); }
+
+                obj.Properties.Add(prop);
             }
             else
             {
@@ -233,6 +238,7 @@ namespace E.Lexer
         {
             return $"Parse Error: Unexpected {name} at line: {linenr}";
         }
+
 
     }
 }

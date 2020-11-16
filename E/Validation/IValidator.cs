@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 
-namespace E.Validation
+namespace EInterpreter.Validation
 {
     public interface IValidator<T>
     {
-        bool Validate(string[] lines,  bool verbose, TextWriter outputChannel);
+        bool Validate(string[] lines,  bool verbose);
     }
 }

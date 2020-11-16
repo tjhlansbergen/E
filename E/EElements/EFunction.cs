@@ -1,8 +1,8 @@
 ﻿using System;
-using E.EObjects;
 using System.Collections.Generic;
+using EInterpreter.EObjects;
 
-namespace E.EElements
+namespace EInterpreter.EElements
 {
     public class EFunction : EElement
     {
@@ -10,11 +10,13 @@ namespace E.EElements
 
         public List<EProperty> Parameters { get; }
 
-        public List<EVariable> Variables { get; set; } = new List<EVariable>();
+        public List<EVariable> Variables { get; } = new List<EVariable>();
 
         public List<EStatement> Statements { get; } = new List<EStatement>();
 
-        public List<EInitialization> Inits { get; } = new List<EInitialization>();
+        public List<EDeclaration> Declarations { get; } = new List<EDeclaration>();
+
+        public List<EFunctionCall> Calls { get; } = new List<EFunctionCall>();
 
         public EFunction(string returnType, string name, List<EProperty> parameters) : base(name)
         {

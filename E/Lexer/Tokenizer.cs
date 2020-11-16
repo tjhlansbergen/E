@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace E.Lexer
+namespace EInterpreter.Lexer
 {
     class Tokenizer
     {
@@ -103,10 +103,10 @@ namespace E.Lexer
                         }
 
                         break;
-                    case ETokenType.INITIALIZATION:
+                    case ETokenType.DECLARATION:
                         if (line.StartsWith("new"))
                         {
-                            return new EToken(linenr, ETokenType.INITIALIZATION, line);
+                            return new EToken(linenr, ETokenType.DECLARATION, line);
                         }
 
                         break;

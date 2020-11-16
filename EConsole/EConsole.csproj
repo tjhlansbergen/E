@@ -4,14 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D1A025BF-57BD-4FFF-8AEB-B7D3337B141A}</ProjectGuid>
+    <ProjectGuid>{3459FAA3-3A64-46A6-9827-CB626813DD6F}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>E</RootNamespace>
-    <AssemblyName>E</AssemblyName>
+    <RootNamespace>EConsole</RootNamespace>
+    <AssemblyName>EConsole</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <TargetFrameworkProfile />
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -22,7 +22,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -32,7 +31,6 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -45,35 +43,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EElements\EFunction.cs" />
-    <Compile Include="EElements\EInitialization.cs" />
-    <Compile Include="EElements\EObject.cs" />
-    <Compile Include="EElements\EProperty.cs" />
-    <Compile Include="EElements\EStatement.cs" />
-    <Compile Include="EElements\EUtility.cs" />
-    <Compile Include="EInterpreter.cs" />
-    <Compile Include="Enums.cs" />
-    <Compile Include="EElements\EElement.cs" />
-    <Compile Include="EElements\EVariable.cs" />
-    <Compile Include="ExtensionsMethods.cs" />
     <Compile Include="Helpers.cs" />
-    <Compile Include="Lexer\ETree.cs" />
-    <Compile Include="Lexer\EToken.cs" />
-    <Compile Include="Lexer\Lexer.cs" />
-    <Compile Include="Lexer\Parser.cs" />
-    <Compile Include="Lexer\ParserException.cs" />
-    <Compile Include="Lexer\Parsers.cs" />
-    <Compile Include="Lexer\Tokenizer.cs" />
-    <Compile Include="Validation\IValidator.cs" />
-    <Compile Include="Validation\PreValidationSteps.cs" />
-    <Compile Include="Validation\PreValidator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Validation\ValidationStepResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\E\EInterpreter.csproj">
+      <Project>{d1a025bf-57bd-4fff-8aeb-b7d3337b141a}</Project>
+      <Name>EInterpreter</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,142 +1,92 @@
-﻿using System;
-using System.CodeDom;
+﻿using EInterpreter.EObjects;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using E.EElements;
-using E.EObjects;
+using EInterpreter.EElements;
 
-namespace E.Lexer
+namespace EInterpreter.Lexer
 {
     public static class Parsers
     {
-        public static bool ParseVariable(string line, out EVariable result, bool isConstant = false)
+        public static EConstant ParseConstant(string line)
         {
-            try
+            if (line.StartsWith("Constant"))
             {
-                if (line.StartsWith("Constant"))
+                line = line.Remove(0, "Constant".Length);
+            }
+            var left = line.SplitClean('=')[0];
+            var right = line.SplitClean('=')[1];
+            
+
+            return new EConstant(left.SplitClean(' ')[0], left.SplitClean(' ')[1], right.Split(';')[0]);
+        }
+
+        public static EObject ParseObject(string namespac, string line)
+        {
+            return new EObject(namespac + line.SplitClean(' ')[1]);
+        }
+
+        public static EUtility ParseUtility(string namespac, string line)
+        {
+            return new EUtility(namespac + line.SplitClean(' ')[1]);
+        }
+
+        public static EFunction ParseFunction(string namespac, string line)
+        {
+            line = line.SplitClean(')')[0];
+            var left = line.SplitClean('(')[0].SplitClean(' ');
+
+            var parameters = new List<EProperty>();
+
+            if (line.SplitClean('(').Length  > 1)
+            {
+                foreach (var p in line.SplitClean('(')[1].SplitClean(','))
                 {
-                    line = line.Remove(0, "Constant".Length);
+                    parameters.Add(ParseProperty(p));
                 }
-                var left = line.SplitClean('=')[0];
-                var right = line.SplitClean('=')[1];
-                result = EVariable.New(left.SplitClean(' ')[0], left.SplitClean(' ')[1], right.Split(';')[0], isConstant);
             }
-            catch
-            {
-                result = null;
-            }
-
-            return result != null;
+            return new EFunction(left[1], namespac + left[2], parameters);
         }
 
-        public static bool ParseObject(string namespac, string line, out EObject result)
+        public static EProperty ParseProperty(string line)
         {
-            try
+            if (line.StartsWith("Property"))
             {
-                result = new EObject(namespac + line.SplitClean(' ')[1]);
-            }
-            catch
-            {
-                result = null;
+                line = line.Remove(0, "Property".Length);
             }
 
-            return result != null;
+            var lineArr = line.SplitClean(' ');
+            return new EProperty(lineArr[0], lineArr[1]);
         }
 
-        public static bool ParseUtility(string namespac, string line, out EUtility result)
+        public static EStatement ParseStatement(string line)
         {
-            try
-            {
-                result = new EUtility(namespac + line.SplitClean(' ')[1]);
-            }
-            catch
-            {
-                result = null;
-            }
-
-            return result != null;
+            return new EStatement("some name"); // TODO 
         }
 
-        public static bool ParseFunction(string namespac, string line, out EFunction result)
+        public static EDeclaration ParseInit(string line)
         {
-            try
+            var lineArr = line.SplitClean(' ');
+            
+            return new EDeclaration(lineArr[1], lineArr[2]);
+        }
+
+        public static EFunctionCall ParseFunctionCall(string line)
+        {
+            var lineArr = line.SplitClean(':');
+            var left = lineArr[0];
+            var right = lineArr[1];
+
+            var rightArr = right.SplitClean(';')[0].SplitClean('(');
+            var parameters = new List<string>();
+
+            if (rightArr.Length > 1)
             {
-                line = line.SplitClean(')')[0];
-                var left = line.SplitClean('(')[0].SplitClean(' ');
-
-                var parameters = new List<EProperty>();
-
-                if (line.SplitClean('(').Length > 1)
+                foreach (var p in rightArr[1].SplitClean(','))
                 {
-                    foreach (var p in line.SplitClean('(')[1].SplitClean(','))
-                    {
-                        if (ParseProperty(p, out var par))
-                        {
-                            parameters.Add(par);
-                        }
-                        else
-                        {
-                            result = null;
-                        }
-                    }
+                    parameters.Add(p);
                 }
-
-                result = new EFunction(left[1], namespac + left[2], parameters);
-            }
-            catch
-            {
-                result = null;
             }
 
-            return result != null;
-        }
-
-        public static bool ParseProperty(string line, out EProperty result)
-        {
-            try
-            {
-                if(line.StartsWith("Property"))
-                {
-                    line = line.Remove(0, "Property".Length);
-                }
-                result = new EProperty(line.SplitClean(' ')[0], line.SplitClean(' ')[1]);
-            }
-            catch
-            {
-                result = null;
-            }
-
-            return result != null;
-        }
-
-        public static bool ParseStatement(string line, out EStatement result)
-        {
-            try
-            {
-                result = new EStatement("some name"); // TODO 
-            }
-            catch
-            {
-                result = null;
-            }
-
-            return result != null;
-        }
-
-        public static bool ParseNew(string line, out EInitialization result)
-        {
-            try
-            {
-                result = new EInitialization(line.SplitClean(' ')[1], line.SplitClean(' ')[2]); 
-            }
-            catch
-            {
-                result = null;
-            }
-
-            return result != null;
+            return new EFunctionCall(left, rightArr[0], parameters);
         }
     }
 }

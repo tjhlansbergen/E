@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace E
+﻿namespace EInterpreter
 {
     /// <summary>
     /// Token types, the value determines the order used when tokenizing
@@ -20,7 +14,7 @@ namespace E
         UTILITY = 6,
         FUNCTION = 7,
         PROPERTY = 8,
-        INITIALIZATION = 9,
+        DECLARATION = 9,
         FUNCTION_CALL = 10,
         FUNCTION_STATEMENT = 11,     //if, for, etc...
         FUNCTION_RETURN = 12

@@ -1,15 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace E
+namespace EConsole
 {
     public static class Helpers
     {
-        public static bool IsValidTextFileAsync(string path, int scanLength = 4096)
+        public static bool _continue()
+        {
+            ConsoleKeyInfo key;
+
+            do
+            {
+                Console.WriteLine("Press Enter to run again, or Esc to exit.");
+                key = Console.ReadKey();
+            } while (key.Key != ConsoleKey.Escape && key.Key != ConsoleKey.Enter);
+
+            return key.Key == ConsoleKey.Enter;
+        }
+
+        public static bool _isValidTextFileAsync(string path, int scanLength = 4096)
         {
             using (var stream = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.Read))
             using (var reader = new StreamReader(stream, Encoding.UTF8))
@@ -46,33 +57,5 @@ namespace E
             }
         }
 
-        public static int MissingChars(string code, char a, char b, out char missing)
-        {
-            var _a = code.Length - code.Replace(a.ToString(), "").Length;
-            var _b = code.Length - code.Replace(b.ToString(), "").Length;
-
-            if (_a > _b)
-            {
-                missing = b;
-                return _a - _b;
-            }
-            
-            if (_a < _b)
-            {
-                missing = a;
-                return _b - _a;
-            }
-
-            missing = (char)0;
-            return 0;
-        }
-
-        public static void WriteColoredLine(string line, bool ok)
-        {
-            var currentColor = Console.ForegroundColor;
-            Console.ForegroundColor = ok ? ConsoleColor.Green : ConsoleColor.Red;
-            Console.WriteLine(line);
-            Console.ForegroundColor = currentColor;
-        }
     }
 }

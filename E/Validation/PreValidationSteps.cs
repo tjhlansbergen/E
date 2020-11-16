@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace E.Validation
+namespace EInterpreter.Validation
 {
     public interface IPreValidationStep
     {
@@ -71,7 +71,7 @@ namespace E.Validation
 
             Parallel.ForEach(braces, (brace) =>
             {
-                var missingBraces = Helpers.MissingChars(code, brace.Item1, brace.Item2, out char missing);
+                var missingBraces = _missingChars(code, brace.Item1, brace.Item2, out char missing);
                 if (missingBraces != 0)
                 {
                     results.Add(new KeyValuePair<char, int>(missing, missingBraces));
@@ -87,6 +87,27 @@ namespace E.Validation
                 var output = results.Aggregate("Not all braces match, missing: ", (current, result) => current + $"{result.Value}x {result.Key} ");
                 return new ValidationStepResult(false, output);
             }
+        }
+
+        private static int _missingChars(string code, char a, char b, out char missing)
+        {
+            var _a = code.Length - code.Replace(a.ToString(), "").Length;
+            var _b = code.Length - code.Replace(b.ToString(), "").Length;
+
+            if (_a > _b)
+            {
+                missing = b;
+                return _a - _b;
+            }
+
+            if (_a < _b)
+            {
+                missing = a;
+                return _b - _a;
+            }
+
+            missing = (char)0;
+            return 0;
         }
     }
 

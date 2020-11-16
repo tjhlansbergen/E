@@ -1,8 +1,8 @@
-﻿using E.EObjects;
-using System;
+﻿using System;
 using System.IO;
+using EInterpreter.EObjects;
 
-namespace E.Lexer
+namespace EInterpreter.Lexer
 {
 
     /// <summary>
@@ -18,11 +18,8 @@ namespace E.Lexer
         /// <param name="verbose">Sets whether or not to print output</param>
         /// <param name="outputChannel">optional, set a custom output channel, when not set, this default to Console</param>
         /// <returns></returns>
-        public ETree GetTree(string[] lines, bool verbose, TextWriter outputChannel = null)
+        public ETree GetTree(string[] lines, bool verbose)
         {
-            // divert output if requested
-            if (outputChannel != null) Console.SetOut(outputChannel);
-
             // tokenize
             var tokens = new Tokenizer().Tokenize(lines);
 

@@ -1,7 +1,7 @@
-﻿using E.EObjects;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using EInterpreter.EObjects;
 
-namespace E.EElements
+namespace EInterpreter.EElements
 {
     public class EUtility : EElement
     {

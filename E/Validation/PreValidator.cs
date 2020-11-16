@@ -3,12 +3,11 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 
-namespace E.Validation
+namespace EInterpreter.Validation
 {
     public class PreValidator : IValidator<string[]>
     {
@@ -20,11 +19,8 @@ namespace E.Validation
             _steps = steps;
         }
 
-        public bool Validate(string[] lines, bool verbose, TextWriter outputChannel = null)
+        public bool Validate(string[] lines, bool verbose)
         {
-            // divert output if requested
-            if(outputChannel != null) Console.SetOut(outputChannel);
-
             var cleanLines = _cleanCopy(lines);
             var results = new ConcurrentBag<ValidationStepResult>();
 
@@ -39,7 +35,7 @@ namespace E.Validation
             {
                 foreach (var validationStepResult in results)
                 {
-                    Helpers.WriteColoredLine(" - " + validationStepResult.Output, validationStepResult.Valid);
+                    ExtensionMethods.WriteColoredLine(" - " + validationStepResult.Output, validationStepResult.Valid);
                 }
             }
 

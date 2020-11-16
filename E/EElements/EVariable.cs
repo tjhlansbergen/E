@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace E.EObjects
+namespace EInterpreter.EObjects
 {
     public class EVariable<T> : EVariable
     {

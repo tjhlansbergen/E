@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using E.EElements;
-using E.EObjects;
-using E.Validation;
+using EInterpreter.EElements;
+using EInterpreter.EObjects;
+using EInterpreter.Validation;
 
-namespace E.EObjects
+namespace EInterpreter.EObjects
 {
     public class ETree
     {
-        public List<EVariable> Constants { get; set; } = new List<EVariable>();
+        public List<EConstant> Constants { get; set; } = new List<EConstant>();
         public List<EObject> Objects { get; set; } = new List<EObject>();
         public List<EUtility> Utilities { get; set; } = new List<EUtility>();
 
