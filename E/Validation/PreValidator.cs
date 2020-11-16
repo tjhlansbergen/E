@@ -35,7 +35,7 @@ namespace EInterpreter.Validation
             {
                 foreach (var validationStepResult in results)
                 {
-                    ExtensionMethods.WriteColoredLine(" - " + validationStepResult.Output, validationStepResult.Valid);
+                    ExtensionMethods.WriteColoredLine(" - " + validationStepResult.Output, validationStepResult.Valid ? ConsoleColor.Green : ConsoleColor.Red);
                 }
             }
 

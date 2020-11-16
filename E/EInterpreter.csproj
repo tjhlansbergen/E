@@ -56,6 +56,9 @@
     <Compile Include="EElements\EProperty.cs" />
     <Compile Include="EElements\EStatement.cs" />
     <Compile Include="EElements\EUtility.cs" />
+    <Compile Include="Engine\Engine.cs" />
+    <Compile Include="Validation\PostValidationSteps.cs" />
+    <Compile Include="Validation\PostValidator.cs" />
     <Compile Include="Worker.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="EElements\EElement.cs" />
@@ -65,7 +68,7 @@
     <Compile Include="Lexer\EToken.cs" />
     <Compile Include="Lexer\Lexer.cs" />
     <Compile Include="Lexer\Parser.cs" />
-    <Compile Include="Lexer\ParserException.cs" />
+    <Compile Include="CustomExceptions.cs" />
     <Compile Include="Lexer\Parsers.cs" />
     <Compile Include="Lexer\Tokenizer.cs" />
     <Compile Include="Validation\IValidator.cs" />
@@ -77,7 +80,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\EBuildIn\EBuildIn.csproj">
+      <Project>{d2b60cd2-3e0e-4b38-8f8d-1c0033a55dd3}</Project>
+      <Name>EBuildIn</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

@@ -5,6 +5,6 @@ namespace EInterpreter.Validation
 {
     public interface IValidator<T>
     {
-        bool Validate(string[] lines,  bool verbose);
+        bool Validate(T content,  bool verbose);
     }
 }

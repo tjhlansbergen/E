@@ -37,7 +37,7 @@ namespace EInterpreter.Lexer
             }
             catch (ParserException pex)
             {
-                ExtensionMethods.WriteColoredLine(pex.Message, false);
+                ExtensionMethods.WriteColoredLine(pex.Message, ConsoleColor.Red);
                 return null;
             }
 
@@ -157,7 +157,7 @@ namespace EInterpreter.Lexer
                 try { statement = Parsers.ParseStatement(token.Line); }
                 catch { throw new ParserException(_unparsebleMessage("statement", token.LineNumber)); }
 
-                func.Statements.Add(statement);
+                func.Elements.Add(statement);
                 _callStack.Push(statement);
             }
             else
@@ -175,7 +175,7 @@ namespace EInterpreter.Lexer
                 try { init = Parsers.ParseInit(token.Line); }
                 catch { throw new ParserException(_unparsebleMessage("object declaration", token.LineNumber)); }
 
-                func.Declarations.Add(init);
+                func.Elements.Add(init);
             }
             else
             {
@@ -194,11 +194,11 @@ namespace EInterpreter.Lexer
 
                 if (_callStack.Peek() is EFunction func)
                 {
-                    func.Calls.Add(call);
+                    func.Elements.Add(call);
                 }
                 else if (_callStack.Peek() is EStatement stat)
                 {
-                    stat.Calls.Add(call);
+                    stat.Elements.Add(call);
                 }
             }
             else

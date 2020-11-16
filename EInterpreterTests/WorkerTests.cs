@@ -38,8 +38,6 @@ namespace EInterpreterTests
 
         [TestMethod]
         [DataRow("Pre-validation")]
-        [DataRow("Lexing")]
-        [DataRow("Post-validation")]
         public void TestWorkerOutput(string content)
         {
             // arrange

@@ -32,12 +32,9 @@ namespace EInterpreter.Lexer
             var parser = new Parser();
             var tree = parser.Parse(tokens);
 
-            Console.WriteLine();
-
-            if (tree != null && verbose)
+            if (tree != null)
             {
                 Console.WriteLine(tree.Summarize());
-                Console.WriteLine();
             }
 
             return tree;

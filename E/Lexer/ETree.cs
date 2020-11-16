@@ -28,19 +28,7 @@ namespace EInterpreter.EObjects
             // utilities
             result.AppendLine($"Utilities: {Utilities.Count}");
 
-            // total
-            result.AppendLine($"Total number of root elements: {_countAllElements()}");
-
-            result.AppendLine();
-
             return result.ToString();
-        }
-
-        private int _countAllElements()
-        {
-            return Constants.Count +
-                   Objects.Count + 
-                   Utilities.Count;
         }
     }
 }

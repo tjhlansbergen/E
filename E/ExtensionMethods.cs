@@ -9,10 +9,10 @@ namespace EInterpreter
             return str.Split(new[] {ch}, StringSplitOptions.RemoveEmptyEntries);
         }
 
-        public static void WriteColoredLine(string line, bool ok)
+        public static void WriteColoredLine(string line, ConsoleColor color)
         {
             var currentColor = Console.ForegroundColor;
-            Console.ForegroundColor = ok ? ConsoleColor.Green : ConsoleColor.Red;
+            Console.ForegroundColor = color;
             Console.WriteLine(line);
             Console.ForegroundColor = currentColor;
         }

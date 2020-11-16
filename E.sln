@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EConsole", "EConsole\EConso
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInterpreterTests", "EInterpreterTests\EInterpreterTests.csproj", "{03625C62-2665-4278-8EF2-B540994FFE99}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EBuildIn", "EBuildIn\EBuildIn.csproj", "{D2B60CD2-3E0E-4B38-8F8D-1C0033A55DD3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{03625C62-2665-4278-8EF2-B540994FFE99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03625C62-2665-4278-8EF2-B540994FFE99}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03625C62-2665-4278-8EF2-B540994FFE99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2B60CD2-3E0E-4B38-8F8D-1C0033A55DD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2B60CD2-3E0E-4B38-8F8D-1C0033A55DD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2B60CD2-3E0E-4B38-8F8D-1C0033A55DD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2B60CD2-3E0E-4B38-8F8D-1C0033A55DD3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

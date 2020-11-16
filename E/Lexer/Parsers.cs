@@ -75,7 +75,7 @@ namespace EInterpreter.Lexer
             var left = lineArr[0];
             var right = lineArr[1];
 
-            var rightArr = right.SplitClean(';')[0].SplitClean('(');
+            var rightArr = right.SplitClean(')')[0].SplitClean('(');
             var parameters = new List<string>();
 
             if (rightArr.Length > 1)
