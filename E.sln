@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInterpreterTests", "EInter
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EBuildIn", "EBuildIn\EBuildIn.csproj", "{D2B60CD2-3E0E-4B38-8F8D-1C0033A55DD3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EBuildInTests", "EBuildInTests\EBuildInTests.csproj", "{561A68B5-8C30-4932-B92B-D87246142E1A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{D2B60CD2-3E0E-4B38-8F8D-1C0033A55DD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2B60CD2-3E0E-4B38-8F8D-1C0033A55DD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2B60CD2-3E0E-4B38-8F8D-1C0033A55DD3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{561A68B5-8C30-4932-B92B-D87246142E1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{561A68B5-8C30-4932-B92B-D87246142E1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{561A68B5-8C30-4932-B92B-D87246142E1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{561A68B5-8C30-4932-B92B-D87246142E1A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

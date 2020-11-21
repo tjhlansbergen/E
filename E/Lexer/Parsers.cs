@@ -1,4 +1,5 @@
-﻿using EInterpreter.EObjects;
+﻿using System;
+using EInterpreter.EObjects;
 using System.Collections.Generic;
 using EInterpreter.EElements;
 
@@ -21,18 +22,30 @@ namespace EInterpreter.Lexer
 
         public static EObject ParseObject(string namespac, string line)
         {
-            return new EObject(namespac + line.SplitClean(' ')[1]);
+            var lineArr = line.SplitClean(' ');
+
+            if(lineArr.Length != 2 || lineArr[0] != "Object") { throw new ParserException("Unparsable object"); }
+
+            return new EObject(namespac + lineArr[1]);
         }
 
         public static EUtility ParseUtility(string namespac, string line)
         {
-            return new EUtility(namespac + line.SplitClean(' ')[1]);
+            var lineArr = line.SplitClean(' ');
+
+            if (lineArr.Length != 2 || lineArr[0] != "Utility") { throw new ParserException("Unparsable utility"); }
+
+            return new EUtility(namespac + lineArr[1]);
         }
 
         public static EFunction ParseFunction(string namespac, string line)
         {
+            if(!line.Contains("(") || !line.Contains(")")) { throw new ParserException("Unparsable function"); }
+
             line = line.SplitClean(')')[0];
             var left = line.SplitClean('(')[0].SplitClean(' ');
+
+            if(left.Length != 3 || left[0] != "Function") { throw new ParserException("Unparsable function"); }
 
             var parameters = new List<EProperty>();
 
@@ -54,24 +67,38 @@ namespace EInterpreter.Lexer
             }
 
             var lineArr = line.SplitClean(' ');
+
+            if(lineArr.Length != 2) { throw new ParserException("Unparsable property"); }
+
             return new EProperty(lineArr[0], lineArr[1]);
         }
 
         public static EStatement ParseStatement(string line)
         {
+            var lineArr = line.SplitClean(')')[0].SplitClean('(');
+
+            if(lineArr.Length != 2 || !Enum.TryParse<EStatementType>(lineArr[0], true, out _)) { throw new ParserException("Unparsable statement"); }
+
             return new EStatement("some name"); // TODO 
         }
 
-        public static EDeclaration ParseInit(string line)
+        public static EDeclaration ParseDeclaration(string line)
         {
             var lineArr = line.SplitClean(' ');
+
+            if(lineArr.Length != 3 || lineArr[0] != "new") { throw new ParserException("Unparsable init");}
             
             return new EDeclaration(lineArr[1], lineArr[2]);
         }
 
         public static EFunctionCall ParseFunctionCall(string line)
         {
+            if(!line.Contains(":") || !line.Contains("(") || !line.Contains(")")) { throw new ParserException("Unparsable function call"); }
+
             var lineArr = line.SplitClean(':');
+
+            if (lineArr.Length != 2) { throw new ParserException("Unparsable function call"); }
+
             var left = lineArr[0];
             var right = lineArr[1];
 

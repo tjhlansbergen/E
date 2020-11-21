@@ -172,7 +172,7 @@ namespace EInterpreter.Lexer
             {
                 EDeclaration init;
 
-                try { init = Parsers.ParseInit(token.Line); }
+                try { init = Parsers.ParseDeclaration(token.Line); }
                 catch { throw new ParserException(_unparsebleMessage("object declaration", token.LineNumber)); }
 
                 func.Elements.Add(init);
@@ -225,7 +225,7 @@ namespace EInterpreter.Lexer
             }
             else
             {
-                throw new ParserException(_unexpectedMessage("poperty", token.LineNumber));
+                throw new ParserException(_unexpectedMessage("property", token.LineNumber));
             }
         }
 

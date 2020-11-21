@@ -8,7 +8,7 @@ using System.Xml;
 
 namespace EBuildIn
 {
-    public class Modules
+    public static class Modules
     {
         private static readonly string namespac = "EBuildIn";
 
