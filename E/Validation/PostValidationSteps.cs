@@ -16,10 +16,16 @@ namespace EInterpreter.Validation
     {
         public ValidationStepResult Execute(ETree tree)
         {
-            var valid = true;   // TODO
+            var identifiers = new List<string>();
+            identifiers.AddRange(tree.Constants.Select(c => c.Name));
+            identifiers.AddRange(tree.Utilities.Select(u => u.Name));
+            identifiers.AddRange(tree.Objects.Select(o => o.Name));
+
+            var valid = ExtensionMethods.ListHasDistinctItemsOnly(identifiers);
+
             return new ValidationStepResult(valid, valid ? "All identifiers have unique names" : "Not all identifiers have unique names");
         }
     }
 
-    // TODO
+    // TODO more post-validation
 }

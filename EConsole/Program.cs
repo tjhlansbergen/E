@@ -39,12 +39,11 @@ namespace EConsole
                 return;
             }
 
-            var lines = File.ReadAllLines(path);
             var interpreter = new EInterpreter.Worker();
 
             do
             {
-                interpreter.Go(lines, Path.GetFileName(path));
+                interpreter.Go(File.ReadAllLines(path), Path.GetFileName(path));
             } while (Helpers._continue());
         }
     }

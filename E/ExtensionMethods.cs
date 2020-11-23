@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace EInterpreter
 {
@@ -15,6 +17,12 @@ namespace EInterpreter
             Console.ForegroundColor = color;
             Console.WriteLine(line);
             Console.ForegroundColor = currentColor;
+        }
+
+        public static bool ListHasDistinctItemsOnly<T>(IEnumerable<T> list)
+        {
+            var diffChecker = new HashSet<T>();
+            return list.All(diffChecker.Add);
         }
     }
 }

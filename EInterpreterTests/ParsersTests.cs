@@ -199,7 +199,5 @@ namespace EInterpreterTests
             // assert
             Assert.ThrowsException<ParserException>(() => Parsers.ParseDeclaration(line));
         }
-
-        // TODO all Parsers (x2)
     }
 }

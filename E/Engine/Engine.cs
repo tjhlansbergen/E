@@ -48,14 +48,22 @@ namespace EInterpreter.Engine
 
         private void _handleFunctionCall(EFunctionCall call)
         {
+            // TODO try as non-build-in function first, this way the user can hide build-in functions if desired
+            // TODO check if parameters match
+            //_runFunction(the parsed function);
+
             // check if we have a build-in function
             if (EBuildIn.Modules.Find(call.Parent))
             {
-                EBuildIn.Modules.Run(call.Parent, call.Name, call.Parameters.ToArray());
+                // TODO check if the module has such a function
+
+                // TODO check if parameters match
+
+                // run the build-in
+                EBuildIn.Modules.Run(call.Parent, call.Name, call.Parameters.ToArray());    // TODO parameters as EBuild-in Types (legal since objects are not allowed here)
             }
 
-            // not a build-in function
-            //_runFunction(the parsed function);
+            // TODO we should raise an error if we didn't find anything suitable to run
         }
     }
 }
