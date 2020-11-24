@@ -8,7 +8,7 @@ using EInterpreter.EObjects;
 
 namespace EInterpreter.Validation
 {
-    class PostValidator : IValidator<ETree>
+    public class PostValidator : IValidator<ETree>
     {
         private readonly List<IPostValidationStep> _steps;
 
@@ -32,7 +32,7 @@ namespace EInterpreter.Validation
             {
                 foreach (var validationStepResult in results)
                 {
-                    ExtensionMethods.WriteColoredLine(" - " + validationStepResult.Output, validationStepResult.Valid ? ConsoleColor.Green : ConsoleColor.Red);
+                    Extensions.WriteColoredLine(" - " + validationStepResult.Output, validationStepResult.Valid ? ConsoleColor.Green : ConsoleColor.Red);
                 }
             }
 

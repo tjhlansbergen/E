@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.InteropServices;
 using EInterpreter.EObjects;
 using EInterpreter.Lexer;
 using EInterpreter.Validation;
@@ -36,13 +37,13 @@ namespace EInterpreter
             }
             catch (Exception ex)
             {
-                ExtensionMethods.WriteColoredLine(ex.Message, ConsoleColor.Red);
+                Extensions.WriteColoredLine(ex.Message, ConsoleColor.Red);
             }
         }
 
         private void _preValidate()
         {
-            ExtensionMethods.WriteColoredLine("Pre-validation: ", ConsoleColor.Blue);
+            Extensions.WriteColoredLine("Pre-validation: ", ConsoleColor.Blue);
             var preValidationResult = new PreValidator(new List<IPreValidationStep>
             {
                 new HasValidLineEndsStep(),
@@ -64,20 +65,22 @@ namespace EInterpreter
 
         private void _lex()
         {
-            ExtensionMethods.WriteColoredLine("Lexing: ", ConsoleColor.Blue);
+            Extensions.WriteColoredLine("Lexing: ", ConsoleColor.Blue);
             _tree = new Lexer.Lexer().GetTree(_lines, false);
             if (_tree != null) return;
 
-            ExtensionMethods.WriteColoredLine("The parser did not return an object tree!", ConsoleColor.Red);
+            Extensions.WriteColoredLine("The parser did not return an object tree!", ConsoleColor.Red);
             throw new LexerException("EInterpreter stopped before execution because of a lexer exception");
         }
 
         private void _postValidate()
         {
-            ExtensionMethods.WriteColoredLine("Post-validation: ", ConsoleColor.Blue);
+            Extensions.WriteColoredLine("Post-validation: ", ConsoleColor.Blue);
             var postValidationResult = new PostValidator(new List<IPostValidationStep>
             {
-                new HasUniqueIdentifiers()
+                new GlobalIdentifiersAreUnique(),
+                new ObjectIdentifiersAreUnique(),
+                new UtilityIdentifiersAreUnique()
             }).Validate(_tree, Verbose);
 
             Console.WriteLine();
@@ -88,15 +91,19 @@ namespace EInterpreter
 
         private void _runEngine()
         {
+            var engine = new Engine.Engine();
+
             try
             {
-                new Engine.Engine().Run(_tree);
+                engine.Run(_tree);
             }
             catch (Exception ex)
             {
                 throw new EngineException($"Runtime error: {ex.Message}");
             }
-            
+
+            Console.WriteLine();
+            Console.WriteLine($"{_name} ran for {engine.Duration.LargestUnit()} and returned {engine.Result}");
         }
     }
 }

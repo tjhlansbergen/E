@@ -15,6 +15,8 @@ namespace EInterpreter.EObjects
         public List<EObject> Objects { get; set; } = new List<EObject>();
         public List<EUtility> Utilities { get; set; } = new List<EUtility>();
 
+        public List<EFunction> Functions => Utilities.SelectMany(u => u.Functions).ToList();
+
         public string Summarize()
         {
             var result = new StringBuilder();

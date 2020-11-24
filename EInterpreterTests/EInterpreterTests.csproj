@@ -53,6 +53,7 @@
     <Compile Include="ParserTests.cs" />
     <Compile Include="LexerTests.cs" />
     <Compile Include="ParsersTests.cs" />
+    <Compile Include="PostValidationTests.cs" />
     <Compile Include="WorkerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -13,6 +13,8 @@ namespace EInterpreter.EElements
 
         public List<string> Parameters { get; }
 
+        public string FullName => $"{Parent}.{Name}";
+
         public EFunctionCall(string parent, string name, List<string> parameters) : base(name)
         {
             Parent = parent;

@@ -11,27 +11,29 @@ namespace EInterpreter.Engine
         public TimeSpan Duration { get; private set; }
         public bool Result { get; private set; }
 
+        private ETree _tree;
+
         public void Run(ETree tree)
         {
             var stopwatch = new Stopwatch();
             stopwatch.Restart();
 
-            _run(tree);
+            _tree = tree;
+            _run();
+            _tree = null;
 
             stopwatch.Stop();
             Duration = stopwatch.Elapsed;
         }
 
-        private void _run(ETree tree)
+        private void _run()
         {
             // find and run the singular Start Function, in the singular Program Utility
-            Result = _runFunction(tree.Utilities.Single(u => u.Name == "Program").Functions.Single(f => f.Name == "Program.Start"));
+            Result = _runFunction(_tree.Utilities.Single(u => u.Name == "Program").Functions.Single(f => f.Name == "Program.Start"));
         }
 
         private bool _runFunction(EFunction function)
         {
-            // TODO handle parameters
-
             foreach (var element in function.Elements)
             {
                 switch (element)
@@ -42,14 +44,20 @@ namespace EInterpreter.Engine
                 }
             }
 
-
-            return true; // TODO
+            return true; // TODO, use return statement
         }
 
         private void _handleFunctionCall(EFunctionCall call)
         {
-            // TODO try as non-build-in function first, this way the user can hide build-in functions if desired
-            // TODO check if parameters match
+            // try as non-build-in function first, this way the user can hide build-in functions if desired
+            var localFunction = _tree.Functions.SingleOrDefault(f => f.Name == call.FullName);
+
+            if (localFunction != null)
+            {
+                // we found a matching function, verify parameters
+
+            }
+
             //_runFunction(the parsed function);
 
             // check if we have a build-in function

@@ -37,7 +37,7 @@ namespace EInterpreter.Lexer
             }
             catch (ParserException pex)
             {
-                ExtensionMethods.WriteColoredLine(pex.Message, ConsoleColor.Red);
+                Extensions.WriteColoredLine(pex.Message, ConsoleColor.Red);
                 return null;
             }
 
