@@ -14,10 +14,11 @@ namespace EInterpreterTests
             var lexer = new Lexer();
 
             // act
-            var result = lexer.GetTree(new[] { "// comment" }, false);
+            var result = lexer.GetTree(new[] { "// comment" });
 
             // assert
             Assert.IsNotNull(result);
+            Assert.AreEqual(1, lexer.Tokens.Count);
         }
 
         [TestMethod]
@@ -27,11 +28,12 @@ namespace EInterpreterTests
             var lexer = new Lexer();
 
             // act
-            var result = lexer.GetTree(new[] { "// comment", "Constant boolean Test = true" }, false);
+            var result = lexer.GetTree(new[] { "// comment", "Constant boolean Test = true" });
 
             // assert
             Assert.IsNotNull(result);
-            Assert.IsTrue(result.Constants.Any());
+            Assert.AreEqual(1, result.Constants.Count);
+            Assert.AreEqual(2, lexer.Tokens.Count);
         }
     }
 }

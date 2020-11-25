@@ -1,6 +1,6 @@
-﻿using System;
-using System.IO;
-using EInterpreter.EObjects;
+﻿using EInterpreter.EObjects;
+using System;
+using System.Collections.Generic;
 
 namespace EInterpreter.Lexer
 {
@@ -10,32 +10,21 @@ namespace EInterpreter.Lexer
     /// </summary>
     public class Lexer
     {
+        public List<EToken> Tokens { get; private set; }
 
         /// <summary>
         /// Create a Abstract Source Tree out lines of E source code
         /// </summary>
         /// <param name="lines">Order array of lines of E source code</param>
-        /// <param name="verbose">Sets whether or not to print output</param>
         /// <returns></returns>
-        public ETree GetTree(string[] lines, bool verbose)
+        public ETree GetTree(string[] lines)
         {
             // tokenize
-            var tokens = new Tokenizer().Tokenize(lines);
-
-            if (verbose)
-            {
-                tokens.ForEach(x => Console.WriteLine(x.ToString()));
-                Console.WriteLine();
-            }
+            Tokens = new Tokenizer().Tokenize(lines);
 
             // parse
             var parser = new Parser();
-            var tree = parser.Parse(tokens);
-
-            if (tree != null)
-            {
-                Console.WriteLine(tree.Summarize());
-            }
+            var tree = parser.Parse(Tokens);
 
             return tree;
         }

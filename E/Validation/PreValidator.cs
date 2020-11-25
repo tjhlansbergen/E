@@ -12,14 +12,16 @@ namespace EInterpreter.Validation
     public class PreValidator : IValidator<string[]>
     {
         private readonly List<IPreValidationStep> _steps;
+
         public static readonly string[] Blocks = { "Utility", "Object", "Function" };
+        public List<ValidationStepResult> Results { get; private set; }
 
         public PreValidator(List<IPreValidationStep> steps)
         {
             _steps = steps;
         }
 
-        public bool Validate(string[] lines, bool verbose)
+        public bool Validate(string[] lines)
         {
             var cleanLines = _cleanCopy(lines);
             var results = new ConcurrentBag<ValidationStepResult>();
@@ -31,13 +33,7 @@ namespace EInterpreter.Validation
                 results.Add(result);
             });
 
-            if (verbose)
-            {
-                foreach (var validationStepResult in results)
-                {
-                    Extensions.WriteColoredLine(" - " + validationStepResult.Output, validationStepResult.Valid ? ConsoleColor.Green : ConsoleColor.Red);
-                }
-            }
+            Results = results.ToList();
 
             return results.All(r => r.Valid);
         }

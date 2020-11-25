@@ -17,7 +17,7 @@ namespace EInterpreterTests
             var validator = new PostValidator(new List<IPostValidationStep>());
 
             // act
-            var result = validator.Validate(new ETree(), false);
+            var result = validator.Validate(new ETree());
 
             // assert
             Assert.IsTrue(result, "Validation should succeed if no steps are specified");
@@ -30,7 +30,7 @@ namespace EInterpreterTests
             var validator = new PostValidator(new List<IPostValidationStep>{ new GlobalIdentifiersAreUnique()});
 
             // act
-            var result = validator.Validate(new ETree{Constants = new List<EConstant>{new EConstant("test", "Test1", "")}, Utilities = new List<EUtility>{new EUtility("Test2")}}, false);
+            var result = validator.Validate(new ETree{Constants = new List<EConstant>{new EConstant("test", "Test1", "")}, Utilities = new List<EUtility>{new EUtility("Test2")}});
 
             // assert
             Assert.IsTrue(result);
@@ -43,7 +43,7 @@ namespace EInterpreterTests
             var validator = new PostValidator(new List<IPostValidationStep> { new GlobalIdentifiersAreUnique() });
 
             // act
-            var result = validator.Validate(new ETree { Constants = new List<EConstant> { new EConstant("test", "Test1", "") }, Utilities = new List<EUtility> { new EUtility("Test1") } }, false);
+            var result = validator.Validate(new ETree { Constants = new List<EConstant> { new EConstant("test", "Test1", "") }, Utilities = new List<EUtility> { new EUtility("Test1") } });
 
             // assert
             Assert.IsFalse(result);
@@ -69,7 +69,7 @@ namespace EInterpreterTests
                             }
                         }
                     }
-                }, false);
+                });
 
             // assert
             Assert.IsTrue(result);
@@ -95,7 +95,7 @@ namespace EInterpreterTests
                         }
                     }
                 }
-            }, false);
+            });
 
             // assert
             Assert.IsFalse(result);
@@ -121,7 +121,7 @@ namespace EInterpreterTests
                         }
                     }
                 }
-            }, false);
+            });
 
             // assert
             Assert.IsTrue(result);
@@ -147,7 +147,7 @@ namespace EInterpreterTests
                         }
                     }
                 }
-            }, false);
+            });
 
             // assert
             Assert.IsFalse(result);

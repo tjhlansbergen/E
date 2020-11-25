@@ -45,7 +45,8 @@ namespace EInterpreter
         private void _preValidate()
         {
             Extensions.WriteColoredLine("Pre-validation: ", ConsoleColor.Blue);
-            var preValidationResult = new PreValidator(new List<IPreValidationStep>
+
+            var validator = new PreValidator(new List<IPreValidationStep>
             {
                 new HasValidLineEndsStep(),
                 new HasMatchingQuotes(),
@@ -56,7 +57,17 @@ namespace EInterpreter
                 new BlockDeclarationsOk(),
                 new ConstantsOk(),
                 new PropertiesOk()
-            }).Validate(_lines, Verbose);
+            });
+                
+            var preValidationResult = validator.Validate(_lines);
+
+            if (Verbose)
+            {
+                foreach (var validationStepResult in validator.Results)
+                {
+                    Extensions.WriteColoredLine(" - " + validationStepResult.Output, validationStepResult.Valid ? ConsoleColor.Green : ConsoleColor.Red);
+                }
+            }
 
             Console.WriteLine();
             Console.WriteLine(preValidationResult ? $"Pre-validation for `{_name}` successful" : $"Pre-validation for {_name} failed!");
@@ -67,9 +78,13 @@ namespace EInterpreter
         private void _lex()
         {
             Extensions.WriteColoredLine("Lexing: ", ConsoleColor.Blue);
-            _tree = new Lexer.Lexer().GetTree(_lines, false);
-            if (_tree != null) return;
-
+            _tree = new Lexer.Lexer().GetTree(_lines);
+            if (_tree != null)
+            {
+                Console.WriteLine(_tree.Summarize());
+                return;
+            }
+            
             Extensions.WriteColoredLine("The parser did not return an object tree!", ConsoleColor.Red);
             throw new LexerException("EInterpreter stopped before execution because of a lexer exception");
         }
@@ -77,12 +92,22 @@ namespace EInterpreter
         private void _postValidate()
         {
             Extensions.WriteColoredLine("Post-validation: ", ConsoleColor.Blue);
-            var postValidationResult = new PostValidator(new List<IPostValidationStep>
+            var validator = new PostValidator(new List<IPostValidationStep>
             {
                 new GlobalIdentifiersAreUnique(),
                 new ObjectIdentifiersAreUnique(),
                 new UtilityIdentifiersAreUnique()
-            }).Validate(_tree, Verbose);
+            });
+            
+            var postValidationResult = validator.Validate(_tree);
+
+            if (Verbose)
+            {
+                foreach (var validationStepResult in validator.Results)
+                {
+                    Extensions.WriteColoredLine(" - " + validationStepResult.Output, validationStepResult.Valid ? ConsoleColor.Green : ConsoleColor.Red);
+                }
+            }
 
             Console.WriteLine();
             Console.WriteLine(postValidationResult ? $"Post-validation for `{_name}` successful" : $"Post-validation for {_name} failed!");

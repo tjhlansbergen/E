@@ -15,7 +15,7 @@ namespace EInterpreterTests
             var validator = new PreValidator(new List<IPreValidationStep>());
 
             // act
-            var result = validator.Validate(new[] {""}, false);
+            var result = validator.Validate(new[] {""});
 
             // assert
             Assert.IsTrue(result, "Validation should succeed if no steps are specified");
@@ -33,7 +33,7 @@ namespace EInterpreterTests
             var validator = new PreValidator(new List<IPreValidationStep> { new HasValidLineEndsStep() });
 
             // act
-            var result = validator.Validate(new [] { line }, false);
+            var result = validator.Validate(new [] { line });
 
             // assert
             Assert.IsTrue(result);
@@ -47,7 +47,7 @@ namespace EInterpreterTests
             var validator = new PreValidator(new List<IPreValidationStep> { new HasValidLineEndsStep() });
 
             // act
-            var result = validator.Validate(new[] { line }, false);
+            var result = validator.Validate(new[] { line });
 
             // assert
             Assert.IsFalse(result);
@@ -62,7 +62,7 @@ namespace EInterpreterTests
             var validator = new PreValidator(new List<IPreValidationStep> { new HasMatchingQuotes() });
 
             // act
-            var result = validator.Validate(lines, false);
+            var result = validator.Validate(lines);
 
             // assert
             Assert.IsTrue(result);
@@ -77,7 +77,7 @@ namespace EInterpreterTests
             var validator = new PreValidator(new List<IPreValidationStep> { new HasMatchingQuotes() });
 
             // act
-            var result = validator.Validate(lines, false);
+            var result = validator.Validate(lines);
 
             // assert
             Assert.IsFalse(result, $"Testcase {string.Join(" ", lines)} failed");
@@ -98,7 +98,7 @@ namespace EInterpreterTests
             var validator = new PreValidator(new List<IPreValidationStep> { new HasMatchingBraces() });
 
             // act
-            var result = validator.Validate(lines, false);
+            var result = validator.Validate(lines);
 
             // assert
             Assert.IsTrue(result, $"Testcase {string.Join(" ",lines)} failed");
@@ -116,7 +116,7 @@ namespace EInterpreterTests
             var validator = new PreValidator(new List<IPreValidationStep> { new HasMatchingBraces() });
 
             // act
-            var result = validator.Validate(lines, false);
+            var result = validator.Validate(lines);
 
             // assert
             Assert.IsFalse(result, $"Testcase {string.Join(" ", lines)} failed");
@@ -130,7 +130,7 @@ namespace EInterpreterTests
             var validator = new PreValidator(new List<IPreValidationStep> { new ContainsProgramUtility() });
 
             // act
-            var result = validator.Validate(lines, false);
+            var result = validator.Validate(lines);
 
             // assert
             Assert.IsTrue(result, $"Testcase {string.Join(" ", lines)} failed");
@@ -147,7 +147,7 @@ namespace EInterpreterTests
             var validator = new PreValidator(new List<IPreValidationStep> { new ContainsProgramUtility() });
 
             // act
-            var result = validator.Validate(lines, false);
+            var result = validator.Validate(lines);
 
             // assert
             Assert.IsFalse(result, $"Testcase {string.Join(" ", lines)} failed");
@@ -161,7 +161,7 @@ namespace EInterpreterTests
             var validator = new PreValidator(new List<IPreValidationStep> { new ContainsStartFunction() });
 
             // act
-            var result = validator.Validate(lines, false);
+            var result = validator.Validate(lines);
 
             // assert
             Assert.IsTrue(result, $"Testcase {string.Join(" ", lines)} failed");
@@ -176,7 +176,7 @@ namespace EInterpreterTests
             var validator = new PreValidator(new List<IPreValidationStep> { new ContainsStartFunction() });
 
             // act
-            var result = validator.Validate(lines, false);
+            var result = validator.Validate(lines);
 
             // assert
             Assert.IsFalse(result, $"Testcase {string.Join(" ", lines)} failed");
@@ -192,7 +192,7 @@ namespace EInterpreterTests
             // act
             foreach (var block in PreValidator.Blocks)
             {
-                result = validator.Validate(new[] { block, "{" }, false);
+                result = validator.Validate(new[] { block, "{" });
             }
 
             // assert
@@ -214,7 +214,7 @@ namespace EInterpreterTests
             // act
             foreach (var block in PreValidator.Blocks)
             {
-                result = validator.Validate(new[] { block, nextLine }, false);
+                result = validator.Validate(new[] { block, nextLine });
             }
 
             // assert
@@ -231,7 +231,7 @@ namespace EInterpreterTests
             var validator = new PreValidator(new List<IPreValidationStep> { new BlockDeclarationsOk() });
 
             // act
-            var result = validator.Validate(new[] { block }, false);
+            var result = validator.Validate(new[] { block });
             
             // assert
             Assert.IsTrue(result, $"Testcase {block} failed");
@@ -247,7 +247,7 @@ namespace EInterpreterTests
             var validator = new PreValidator(new List<IPreValidationStep> { new BlockDeclarationsOk() });
 
             // act
-            var result = validator.Validate(new[] { block }, false);
+            var result = validator.Validate(new[] { block });
 
             // assert
             Assert.IsFalse(result, $"Testcase {block} failed");
@@ -262,7 +262,7 @@ namespace EInterpreterTests
             var validator = new PreValidator(new List<IPreValidationStep> { new ConstantsOk() });
 
             // act
-            var result = validator.Validate(new[] { constant }, false);
+            var result = validator.Validate(new[] { constant });
 
             // assert
             Assert.IsTrue(result, $"Testcase {constant} failed");
@@ -278,7 +278,7 @@ namespace EInterpreterTests
             var validator = new PreValidator(new List<IPreValidationStep> { new ConstantsOk() });
 
             // act
-            var result = validator.Validate(new[] { constant }, false);
+            var result = validator.Validate(new[] { constant });
 
             // assert
             Assert.IsFalse(result, $"Testcase {constant} failed");
@@ -293,7 +293,7 @@ namespace EInterpreterTests
             var validator = new PreValidator(new List<IPreValidationStep> { new PropertiesOk() });
 
             // act
-            var result = validator.Validate(new[] { prop }, false);
+            var result = validator.Validate(new[] { prop });
 
             // assert
             Assert.IsTrue(result, $"Testcase {prop} failed");
@@ -308,7 +308,7 @@ namespace EInterpreterTests
             var validator = new PreValidator(new List<IPreValidationStep> { new PropertiesOk() });
 
             // act
-            var result = validator.Validate(new[] { prop }, false);
+            var result = validator.Validate(new[] { prop });
 
             // assert
             Assert.IsFalse(result, $"Testcase {prop} failed");

@@ -1,23 +1,22 @@
-﻿using System;
+﻿using EInterpreter.EObjects;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using EInterpreter.EObjects;
 
 namespace EInterpreter.Validation
 {
     public class PostValidator : IValidator<ETree>
     {
         private readonly List<IPostValidationStep> _steps;
+        public List<ValidationStepResult> Results { get; private set; }
 
         public PostValidator(List<IPostValidationStep> steps)
         {
             _steps = steps;
         }
 
-        public bool Validate(ETree tree, bool verbose)
+        public bool Validate(ETree tree)
         {
             var results = new ConcurrentBag<ValidationStepResult>();
 
@@ -28,13 +27,7 @@ namespace EInterpreter.Validation
                 results.Add(result);
             });
 
-            if (verbose)
-            {
-                foreach (var validationStepResult in results)
-                {
-                    Extensions.WriteColoredLine(" - " + validationStepResult.Output, validationStepResult.Valid ? ConsoleColor.Green : ConsoleColor.Red);
-                }
-            }
+            Results = results.ToList();
 
             return results.All(r => r.Valid);
         }
