@@ -57,13 +57,12 @@
     <Compile Include="EElements\EStatement.cs" />
     <Compile Include="EElements\EUtility.cs" />
     <Compile Include="Engine\Engine.cs" />
-    <Compile Include="Engine\TypeChecker.cs" />
+    <Compile Include="Engine\EngineHelpers.cs" />
     <Compile Include="Validation\PostValidationSteps.cs" />
     <Compile Include="Validation\PostValidator.cs" />
     <Compile Include="Worker.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="EElements\EElement.cs" />
-    <Compile Include="EElements\EVariable.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Lexer\ETree.cs" />
     <Compile Include="Lexer\EToken.cs" />

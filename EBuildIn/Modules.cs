@@ -19,7 +19,7 @@ namespace EBuildIn
                 .Contains(moduleName);
         }
 
-        public static void Run(string moduleName, string functionName, object[] parameters)
+        public static Variable Run(string moduleName, string functionName, object[] parameters)
         {
             // TODO error handling (e.g. function not found etc...)
 
@@ -27,6 +27,8 @@ namespace EBuildIn
             MethodInfo method = t?.GetMethod(functionName, BindingFlags.Static | BindingFlags.Public);
 
             method?.Invoke(null, parameters);
+
+            return new Variable("boolean", true);
         }
 
         private static Type[] _getTypesInThisNamespace()

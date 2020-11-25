@@ -21,15 +21,6 @@
         ,
     }
 
-    public enum EType
-    {
-        BOOLEAN,
-        TEXT,
-        NUMBER,
-        LIST,
-        USER_DEFINED
-    }
-
     public enum EStatementType
     {
         IF,

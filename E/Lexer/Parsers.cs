@@ -13,8 +13,8 @@ namespace EInterpreter.Lexer
             {
                 line = line.Remove(0, "Constant".Length);
             }
-            var left = line.SplitClean('=')[0];
-            var right = line.SplitClean('=')[1];
+            var left = line.SplitClean('=')[0].Trim();
+            var right = line.SplitClean('=')[1].Trim();
             
 
             return new EConstant(left.SplitClean(' ')[0], left.SplitClean(' ')[1], right.Split(';')[0]);
