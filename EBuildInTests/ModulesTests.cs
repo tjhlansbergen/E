@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace EBuildInTests
 {
@@ -9,20 +10,21 @@ namespace EBuildInTests
         public void TestFindFound()
         {
             // act
-            var result = EBuildIn.Modules.Find("Console");
+            var result = EBuildIn.Modules.FindFunctionAndReturnParameters("Console", "WriteLine");
 
             // assert
-            Assert.IsTrue(result);
+            Assert.AreEqual(1, result.Count);
+            Assert.AreEqual("text", result.Single());
         }
 
         [TestMethod]
         public void TestFindNotFound()
         {
             // act
-            var result = EBuildIn.Modules.Find("bla");
+            var result = EBuildIn.Modules.FindFunctionAndReturnParameters("Test", "Test");
 
             // assert
-            Assert.IsFalse(result);
+            Assert.IsNull(result);
         }
     }
 }

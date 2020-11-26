@@ -12,32 +12,26 @@ namespace EBuildIn
     {
         private static readonly string namespac = "EBuildIn";
 
-        public static bool Find(string moduleName)
+        public static List<string> FindFunctionAndReturnParameters(string module, string function)
         {
-            return _getTypesInThisNamespace()
-                .Select(t => t.Name)
-                .Contains(moduleName);
+            function += "Parameters";
+            var type = Type.GetType($"{namespac}.{module}");
+            var propertyInfo = type?.GetProperty(function, BindingFlags.Static | BindingFlags.Public | BindingFlags.GetProperty);
+            return (List<string>)propertyInfo?.GetValue(null);
         }
 
-        public static Variable Run(string moduleName, string functionName, object[] parameters)
+        public static Variable Run(string module, string function, object[] parameters)
         {
             // TODO error handling (e.g. function not found etc...)
 
-            Type t = Type.GetType($"{namespac}.{moduleName}");
-            MethodInfo method = t?.GetMethod(functionName, BindingFlags.Static | BindingFlags.Public);
+            var type = Type.GetType($"{namespac}.{module}");
+            var method = type?.GetMethod(function, BindingFlags.Static | BindingFlags.Public);
 
             method?.Invoke(null, parameters);
 
+            // TODO handle return value
+
             return new Variable("boolean", true);
-        }
-
-        private static Type[] _getTypesInThisNamespace()
-        {
-            var assembly = Assembly.GetExecutingAssembly();
-
-            return assembly.GetTypes()
-                    .Where(t => String.Equals(t.Namespace, namespac, StringComparison.Ordinal))
-                    .ToArray();
         }
     }
 }

@@ -28,17 +28,9 @@ namespace EInterpreter.Lexer
 
             var orderedTokens = tokens.OrderBy(t => t.LineNumber).ToList();
 
-            try
+            foreach (var token in orderedTokens)
             {
-                foreach (var token in orderedTokens)
-                {
-                    _processToken(token, tree);
-                }
-            }
-            catch (ParserException pex)
-            {
-                Extensions.WriteColoredLine(pex.Message, ConsoleColor.Red);
-                return null;
+                _processToken(token, tree);
             }
 
             return tree;
@@ -95,7 +87,7 @@ namespace EInterpreter.Lexer
 
         private void _handleClose()
         {
-            if(_callStack.Any()) _callStack.Pop();
+            if (_callStack.Any()) _callStack.Pop();
         }
 
         private void _handleConstant(EToken token, ETree tree)

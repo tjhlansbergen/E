@@ -85,18 +85,13 @@ namespace EInterpreter.Engine
                 return _runFunction(localFunction, parameters.ToList());
             }
 
-            // check if we have a build-in function
-            if (Modules.Find(call.Parent))
+            // check if we have a build-in function, and get it's parameters
+            var targetParameters = EBuildIn.Modules.FindFunctionAndReturnParameters(call.Parent, call.Name);
+
+            if (targetParameters != null && EngineHelpers.MatchParameters(parameters, targetParameters))
             {
-                // TODO check if the module has such a function
-
-                // TODO expand parameters
-
-                // TODO check if parameters match
-
-                // run the build-in
-                return Modules.Run(call.Parent, call.Name, call.Parameters.Select(p =>_expandParameter(p).Value).ToArray());    // TODO parameters as EBuild-in Types (legal since objects are not allowed here), currently most likely only strings/text will resolve correctly 
-
+                // we have match for a build in function, run it
+                return Modules.Run(call.Parent, call.Name, call.Parameters.Select(p => _expandParameter(p).Value).ToArray());    // TODO parameters as EBuild-in Types (legal since objects are not allowed here), currently most likely only strings/text will resolve correctly 
             }
 
             // TODO we should raise an error if we didn't find anything suitable to run

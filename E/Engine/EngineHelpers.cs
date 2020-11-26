@@ -33,5 +33,16 @@ namespace EInterpreter.Engine
 
             return match;
         }
+
+        public static bool MatchParameters(List<Variable> callerParameters, List<string> targetParameterTypes)
+        {
+            // invalid call
+            if (callerParameters == null || targetParameterTypes == null) { return false; }
+
+            // first, check the number of parameters
+            if (callerParameters.Count != targetParameterTypes.Count) { return false; }
+
+            return !callerParameters.Where((t, i) => t.Type != targetParameterTypes[i]).Any();
+        }
     }
 }
