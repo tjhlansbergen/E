@@ -111,7 +111,7 @@ namespace EInterpreter.Lexer
 
                         break;
                     case ETokenType.FUNCTION_CALL:
-                        if (line.SplitClean(':').Length == 2)
+                        if (line.SplitClean(':', 2).Length == 2)
                         {
                             return new EToken(linenr, ETokenType.FUNCTION_CALL, line);
                         }

@@ -11,9 +11,9 @@ namespace EInterpreterTests
     public class ParsersTests
     {
         [TestMethod]
-        [DataRow("Constant boolean Test = \"True\"")]
-        [DataRow("Constant text Test = \"Some text\"")]
-        [DataRow("Constant number Test = 42.2")]
+        [DataRow("Constant Boolean Test = \"True\"")]
+        [DataRow("Constant Text Test = \"Some text\"")]
+        [DataRow("Constant Number Test = 42.2")]
         public void ParsersShouldSucceed_ParseConstant(string line)
         {
             // act
@@ -28,7 +28,7 @@ namespace EInterpreterTests
         [DataRow("Test")]
         [DataRow("Constant Test")]
         [DataRow("Constant Test = test")]
-        [DataRow("Constant boolean Test")]
+        [DataRow("Constant Boolean Test")]
         public void ParsersShouldFail_ParseConstant(string line)
         {
             // assert
@@ -36,7 +36,7 @@ namespace EInterpreterTests
         }
 
         [TestMethod]
-        [DataRow("Property boolean Test")]
+        [DataRow("Property Boolean Test")]
         [DataRow("Number 42")]
         public void ParsersShouldSucceed_ParseProperty(string line)
         {
@@ -129,9 +129,9 @@ namespace EInterpreterTests
         }
 
         [TestMethod]
-        [DataRow("Function boolean SomeFunction()", 0)]
-        [DataRow("Function number GetAge(text birthdate)", 1)]
-        [DataRow("Function number GetAge(text birthdate, boolean inDays)", 2)]
+        [DataRow("Function Boolean SomeFunction()", 0)]
+        [DataRow("Function Number GetAge(Text birthdate)", 1)]
+        [DataRow("Function Number GetAge(Text birthdate, Boolean inDays)", 2)]
         public void ParsersShouldSucceed_ParseFunction(string line, int numberOfParameters)
         {
             // act
@@ -146,8 +146,8 @@ namespace EInterpreterTests
 
         [TestMethod]
         [DataRow("Function Test")]
-        [DataRow("Function boolean Test")]
-        [DataRow("boolean Test()")]
+        [DataRow("Function Boolean Test")]
+        [DataRow("Boolean Test()")]
         public void ParsersShouldFail_ParseFunction(string line)
         {
             // assert
@@ -179,7 +179,7 @@ namespace EInterpreterTests
 
         [TestMethod]
         [DataRow("new Message message")]
-        [DataRow("new number Age")]
+        [DataRow("new Number Age")]
         public void ParsersShouldSucceed_ParseDeclaration(string line)
         {
             // act
@@ -191,13 +191,37 @@ namespace EInterpreterTests
         }
 
         [TestMethod]
-        [DataRow("boolean Test")]
-        [DataRow("new number")]
-        [DataRow("new number Age = 42")]
+        [DataRow("Boolean Test")]
+        [DataRow("new Number")]
+        [DataRow("new Number Age = 42")]
         public void ParsersShouldFail_ParseDeclaration(string line)
         {
             // assert
             Assert.ThrowsException<ParserException>(() => Parsers.ParseDeclaration(line));
+        }
+
+        [TestMethod]
+        [DataRow("return \"hi\";")]
+        [DataRow("return 42;")]
+        [DataRow("return someVar;")]
+        public void ParsersShouldSucceed_ParseReturn(string line)
+        {
+            // act
+            var result = Parsers.ParseReturnStatement(line);
+
+            // assert
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(EReturn));
+        }
+
+        [TestMethod]
+        [DataRow("Test")]
+        [DataRow("return test")]
+        [DataRow("return var = 42;")]
+        public void ParsersShouldFail_ParseReturn(string line)
+        {
+            // assert
+            Assert.ThrowsException<ParserException>(() => Parsers.ParseReturnStatement(line));
         }
     }
 }

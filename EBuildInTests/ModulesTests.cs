@@ -14,7 +14,7 @@ namespace EBuildInTests
 
             // assert
             Assert.AreEqual(1, result.Count);
-            Assert.AreEqual("text", result.Single());
+            Assert.AreEqual("Text", result.Single());
         }
 
         [TestMethod]

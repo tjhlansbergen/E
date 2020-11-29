@@ -124,13 +124,13 @@ namespace EInterpreter.Validation
         {
             var allcode = string.Join(string.Empty, lines);
 
-            if (allcode.Contains("Function boolean Start"))
+            if (allcode.Contains("Function Boolean Start"))
             {
                 return new ValidationStepResult(true, "Start Function found.");
             }
             else if(allcode.Contains("Function Start"))
             {
-                return new ValidationStepResult(false, "Start Function found, but mandatory return type of 'boolean' missing.");
+                return new ValidationStepResult(false, "Start Function found, but mandatory return type of 'Boolean' missing.");
             }
             else
             {

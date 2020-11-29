@@ -201,7 +201,26 @@ namespace EInterpreter.Lexer
 
         private void _handleFunctionReturn(EToken token)
         {
-            // TODO
+            if (_callStack.Any() && (_callStack.Peek() is EFunction || _callStack.Peek() is EStatement))
+            {
+                EReturn retn;
+
+                try { retn = Parsers.ParseReturnStatement(token.Line); }
+                catch { throw new ParserException(_unparsebleMessage("return statement", token.LineNumber)); }
+
+                if (_callStack.Peek() is EFunction func)
+                {
+                    func.Elements.Add(retn);
+                }
+                else if (_callStack.Peek() is EStatement stat)
+                {
+                    stat.Elements.Add(retn);
+                }
+            }
+            else
+            {
+                throw new ParserException(_unexpectedMessage("return statement", token.LineNumber));
+            }
         }
 
         private void _handleProperty(EToken token)

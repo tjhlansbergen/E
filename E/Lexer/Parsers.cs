@@ -1,7 +1,6 @@
-﻿using System;
-using EInterpreter.EObjects;
+﻿using EInterpreter.EElements;
+using System;
 using System.Collections.Generic;
-using EInterpreter.EElements;
 
 namespace EInterpreter.Lexer
 {
@@ -93,27 +92,46 @@ namespace EInterpreter.Lexer
 
         public static EFunctionCall ParseFunctionCall(string line)
         {
-            if(!line.Contains(":") || !line.Contains("(") || !line.Contains(")")) { throw new ParserException("Unparsable function call"); }
+            if(!line.Contains(":") || !line.Contains("(") || !line.Contains(")")) { throw new ParserException("Unparseble function call"); }
 
-            var lineArr = line.SplitClean(':');
+            var lineArr = line.SplitClean(':', 2);
 
-            if (lineArr.Length != 2) { throw new ParserException("Unparsable function call"); }
+            if (lineArr.Length < 2) { throw new ParserException("Unparsable function call"); }
 
             var left = lineArr[0];
             var right = lineArr[1];
 
-            var rightArr = right.SplitClean(')')[0].SplitClean('(');
+            var rightArr = right.SplitClean('(', 2);
+            var funcName = rightArr[0];
+            string parameterString;
+            if (rightArr[1] == ")")
+            {
+                parameterString = string.Empty;
+            }
+            else
+            {
+                parameterString = rightArr[1].Substring(0, rightArr[1].Length - 2);
+            }
+            
             var parameters = new List<string>();
 
-            if (rightArr.Length > 1)
+            if (parameterString.Length > 1)
             {
-                foreach (var p in rightArr[1].SplitClean(','))
+                foreach (var p in parameterString.SplitClean(','))
                 {
                     parameters.Add(p);
                 }
             }
 
-            return new EFunctionCall(left, rightArr[0], parameters);
+            return new EFunctionCall(left, funcName, parameters);
+        }
+
+        public static EReturn ParseReturnStatement(string line)
+        {
+            if(!line.StartsWith("return ") || !line.Contains(";") || line.SplitClean(' ').Length < 2 || line.Contains("=")) { throw new ParserException("Unparseble return statement"); }
+
+            var parameter = line.SplitClean(';')[0].Remove(0, "return ".Length);
+            return new EReturn("", parameter);
         }
     }
 }

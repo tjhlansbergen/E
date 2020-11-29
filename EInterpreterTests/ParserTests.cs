@@ -30,7 +30,7 @@ namespace EInterpreterTests
             var parser = new Parser();
 
             // act
-            var result = parser.Parse(new List<EToken>{ new EToken(1, ETokenType.CONSTANT, "Constant boolean Test = true") });
+            var result = parser.Parse(new List<EToken>{ new EToken(1, ETokenType.CONSTANT, "Constant Boolean Test = true") });
 
             // assert
             Assert.IsNotNull(result);

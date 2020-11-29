@@ -6,9 +6,16 @@ namespace EInterpreter
 {
     public static class ExtensionMethods
     {
-        public static string[] SplitClean(this string str, char ch)
+        public static string[] SplitClean(this string str, char ch, int count = -1)
         {
-            return str.Split(new[] {ch}, StringSplitOptions.RemoveEmptyEntries);
+            if (count == -1)
+            {
+                return str.Split(new[] { ch }, StringSplitOptions.RemoveEmptyEntries);
+            }
+            else
+            {
+                return str.Split(new[] { ch }, count, StringSplitOptions.RemoveEmptyEntries);
+            }
         }
 
         public static IEnumerable<T> GetNonDistinctValues<T>(this IEnumerable<T> list)

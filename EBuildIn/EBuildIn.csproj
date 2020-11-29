@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Console.cs" />
+    <Compile Include="Types.cs" />
     <Compile Include="Variable.cs" />
     <Compile Include="Modules.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

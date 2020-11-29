@@ -28,7 +28,7 @@ namespace EInterpreterTests
             var lexer = new Lexer();
 
             // act
-            var result = lexer.GetTree(new[] { "// comment", "Constant boolean Test = true" });
+            var result = lexer.GetTree(new[] { "// comment", "Constant Boolean Test = true" });
 
             // assert
             Assert.IsNotNull(result);

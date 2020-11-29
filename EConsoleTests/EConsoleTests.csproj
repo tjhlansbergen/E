@@ -5,11 +5,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{03625C62-2665-4278-8EF2-B540994FFE99}</ProjectGuid>
+    <ProjectGuid>{D490A793-1DBF-40B6-B0EB-336B0B92F2A1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EInterpreterTests</RootNamespace>
-    <AssemblyName>EInterpreterTests</AssemblyName>
+    <RootNamespace>EConsoleTests</RootNamespace>
+    <AssemblyName>EConsoleTests</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -49,25 +49,18 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PreValidationTests.cs" />
-    <Compile Include="ParserTests.cs" />
-    <Compile Include="LexerTests.cs" />
-    <Compile Include="ParsersTests.cs" />
-    <Compile Include="PostValidationTests.cs" />
-    <Compile Include="EngineTests.cs" />
-    <Compile Include="WorkerTests.cs" />
+    <Compile Include="EconsoleTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\E\EInterpreter.csproj">
-      <Project>{d1a025bf-57bd-4fff-8aeb-b7d3337b141a}</Project>
-      <Name>EInterpreter</Name>
+    <ProjectReference Include="..\EConsole\EConsole.csproj">
+      <Project>{3459faa3-3a64-46a6-9827-cb626813dd6f}</Project>
+      <Name>EConsole</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
@@ -78,8 +71,4 @@
     <Error Condition="!Exists('..\packages\MSTest.TestAdapter.2.1.1\build\net45\MSTest.TestAdapter.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MSTest.TestAdapter.2.1.1\build\net45\MSTest.TestAdapter.targets'))" />
   </Target>
   <Import Project="..\packages\MSTest.TestAdapter.2.1.1\build\net45\MSTest.TestAdapter.targets" Condition="Exists('..\packages\MSTest.TestAdapter.2.1.1\build\net45\MSTest.TestAdapter.targets')" />
-  <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
-  </PropertyGroup>
 </Project>

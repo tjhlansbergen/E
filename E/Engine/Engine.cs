@@ -65,12 +65,19 @@ namespace EInterpreter.Engine
                             _stack.Add(result);
                         }
                         break;
+                    case EReturn returnStatement:
+                    {
+                        var result = _expandParameter(returnStatement.Parameter);
+                        _stack.RemoveAll(v => v.Scope == scope);
+                        return result;
+                    }
                 }
             }
 
-
+            // by now, we should have come across at least one return statement, if not that's an error
             _stack.RemoveAll(v => v.Scope == scope);
-            return new Variable("boolean", true); // TODO, use the function's return statement(s)
+            throw new EngineException($"Function {function.Name} exited without return statement.");
+            //return new Variable(EBuildIn.Types.Boolean.ToString(), true); // TODO, use the function's return statement(s)
         }
 
         private Variable _handleFunctionCall(EFunctionCall call)
@@ -95,7 +102,7 @@ namespace EInterpreter.Engine
             }
 
             // TODO we should raise an error if we didn't find anything suitable to run
-            return new Variable("boolean", false);
+            return new Variable(Types.Text.ToString(), false);
         }
 
 
@@ -105,13 +112,13 @@ namespace EInterpreter.Engine
             // determine the type step by step
 
             // is it true/false?
-            if (bool.TryParse(parameter, out bool boolean)) { return new Variable("boolean", boolean); }  //TODO get type string from its build-in type
+            if (bool.TryParse(parameter, out bool boolean)) { return new Variable(Types.Boolean.ToString(), boolean); }  //TODO get type string from its build-in type
 
             // is it a literal double?
-            if (double.TryParse(parameter, out double number)) { return new Variable("number", number); }   //TODO get type string from its build-in type
+            if (double.TryParse(parameter, out double number)) { return new Variable(Types.Number.ToString(), number); }   //TODO get type string from its build-in type
 
             // is it a string-literal
-            if (parameter.StartsWith("\"") && parameter.EndsWith("\"")) { return new Variable("text", parameter.Replace("\"", "")); }   //TODO get type string from its build-in type
+            if (parameter.StartsWith("\"") && parameter.EndsWith("\"")) { return new Variable(Types.Text.ToString(), parameter.Replace("\"", "")); }   //TODO get type string from its build-in type
 
             // we don't support inline-lists (yet), no need to check for that
 

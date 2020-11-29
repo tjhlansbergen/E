@@ -54,6 +54,7 @@
     <Compile Include="EElements\EDeclaration.cs" />
     <Compile Include="EElements\EObject.cs" />
     <Compile Include="EElements\EProperty.cs" />
+    <Compile Include="EElements\EReturn.cs" />
     <Compile Include="EElements\EStatement.cs" />
     <Compile Include="EElements\EUtility.cs" />
     <Compile Include="Engine\Engine.cs" />

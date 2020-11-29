@@ -31,7 +31,7 @@ namespace EConsole
                 var bytesRead = reader.ReadBlock(buffer, 0, bufferLength);
                 reader.Close();
 
-                if (bytesRead != bufferLength)
+                if (Math.Abs(bufferLength-bytesRead) > 3)
                 {
                     throw new IOException($"There was an error reading from the file {path}");
                 }

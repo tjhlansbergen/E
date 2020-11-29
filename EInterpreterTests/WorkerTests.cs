@@ -58,13 +58,15 @@ namespace EInterpreterTests
         [DataRow(new[] { "Hello World!" }, "hello_world_constant.e")]
         [DataRow(new[] { "Hello World!" }, "hello_world_function.e")]
         [DataRow(new[] { "Hello World!" }, "hello_world_parameter.e")]
+        [DataRow(new[] { "Hello World!" }, "hello_world_return.e")]
         public void TestWorkerFullScripts(string[] shouldContain, string name)
         {
             // arrange
             var stringWriter = new StringWriter();
             var worker = new Worker(stringWriter);
 
-            var path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), $"WorkerTestScripts\\{name}");
+            var path = Path.Combine(new DirectoryInfo(Environment.CurrentDirectory).Parent?.Parent?.Parent?.FullName,
+                $"TestScripts\\{name}");
             var lines = File.ReadAllLines(path);
 
             var shouldContainComplete = shouldContain.Concat(new[] { $"Pre-validation for `{name}` successful", $"Post-validation for `{name}` successful", "ran for", "returned"});

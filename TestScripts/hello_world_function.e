@@ -2,13 +2,13 @@
 
 Utility Program
 {
-	Function boolean Start(text arguments)
+	Function Boolean Start(Text arguments)
 	{
 		Program:HelloWorld();
 		return true;
 	}
 	
-	Function boolean HelloWorld()
+	Function Boolean HelloWorld()
 	{
 		Console:WriteLine("Hello World!");
 		return true;

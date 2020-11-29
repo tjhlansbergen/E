@@ -1,8 +1,8 @@
-﻿// Hello World
+﻿// Hello World 1
 
 Utility Program
 {
-	Function boolean Start(text arguments)
+	Function Boolean Start(Text arguments)
 	{
 		Console:WriteLine("Hello World!");
 		return true;

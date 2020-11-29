@@ -154,7 +154,7 @@ namespace EInterpreterTests
         }
 
         [TestMethod]
-        [DataRow(new[] { "Function boolean Start" })]
+        [DataRow(new[] { "Function Boolean Start" })]
         public void ValidationShouldSucceed_ContainsStartFunction(string[] lines)
         {
             // arrange
@@ -169,7 +169,7 @@ namespace EInterpreterTests
 
         [TestMethod]
         [DataRow(new[] { "Function Start" })]
-        [DataRow(new[] { "boolean Start" })]
+        [DataRow(new[] { "Boolean Start" })]
         public void ValidationShouldFail_ContainsStartFunction(string[] lines)
         {
             // arrange
@@ -254,8 +254,8 @@ namespace EInterpreterTests
         }
 
         [TestMethod]
-        [DataRow("Constant boolean PayMore = true")]
-        [DataRow("Constant number TheAnswer = 42")]
+        [DataRow("Constant Boolean PayMore = true")]
+        [DataRow("Constant Number TheAnswer = 42")]
         public void ValidationShouldSucceed_ConstantsOk(string constant)
         {
             // arrange
@@ -269,9 +269,9 @@ namespace EInterpreterTests
         }
 
         [TestMethod]
-        [DataRow("Constant boolean PayMore")]
+        [DataRow("Constant Boolean PayMore")]
         [DataRow("Constant TheAnswer = 42")]
-        [DataRow("Constant text = \"mytext\"")]
+        [DataRow("Constant Text = \"mytext\"")]
         public void ValidationShouldFail_ConstantsOk(string constant)
         {
             // arrange
@@ -285,8 +285,8 @@ namespace EInterpreterTests
         }
 
         [TestMethod]
-        [DataRow("Property boolean Test")]
-        [DataRow("Property number TestNum")]
+        [DataRow("Property Boolean Test")]
+        [DataRow("Property Number TestNum")]
         public void ValidationShouldSucceed_PropertiesOk(string prop)
         {
             // arrange
@@ -300,8 +300,8 @@ namespace EInterpreterTests
         }
 
         [TestMethod]
-        [DataRow("Property boolean")]
-        [DataRow("Property number TestNum = 42")]
+        [DataRow("Property Boolean")]
+        [DataRow("Property Number TestNum = 42")]
         public void ValidationShouldFail_PropertiesOk(string prop)
         {
             // arrange
