@@ -10,6 +10,8 @@ namespace EBuildIn
 
         public static List<string> FindFunctionAndReturnParameters(string module, string function)
         {
+            if(module == "Modules" || module == "Types") { return null; }
+
             function += "Parameters";
             var type = Type.GetType($"{namespac}.{module}");
             var propertyInfo = type?.GetProperty(function, BindingFlags.Static | BindingFlags.Public | BindingFlags.GetProperty);

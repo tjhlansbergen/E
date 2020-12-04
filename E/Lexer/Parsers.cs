@@ -83,7 +83,7 @@ namespace EInterpreter.Lexer
 
         public static EDeclaration ParseDeclaration(string line)
         {
-            var lineArr = line.SplitClean(' ');
+            var lineArr = line.SplitClean(';')[0].SplitClean(' ');
 
             if(lineArr.Length != 3 || lineArr[0] != "new") { throw new ParserException("Unparsable init");}
             
@@ -119,7 +119,7 @@ namespace EInterpreter.Lexer
             {
                 foreach (var p in parameterString.SplitClean(','))
                 {
-                    parameters.Add(p);
+                    parameters.Add(p.Trim());
                 }
             }
 

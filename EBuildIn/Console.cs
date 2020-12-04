@@ -6,9 +6,9 @@ namespace EBuildIn
     {
         public static List<string> WriteLineParameters => new List<string> { Types.Text.ToString() };
 
-        public static Variable WriteLine(string line)
+        public static Variable WriteLine(Variable line)
         {
-            System.Console.WriteLine(line);
+            System.Console.WriteLine(line.Value);
 
             return new Variable(Types.Boolean.ToString(), true);
         }

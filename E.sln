@@ -22,7 +22,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestScripts", "TestScripts"
 		TestScripts\hello_world.e = TestScripts\hello_world.e
 		TestScripts\hello_world_constant.e = TestScripts\hello_world_constant.e
 		TestScripts\hello_world_function.e = TestScripts\hello_world_function.e
+		TestScripts\hello_world_parameter.e = TestScripts\hello_world_parameter.e
 		TestScripts\hello_world_return.e = TestScripts\hello_world_return.e
+		TestScripts\hello_world_variable.e = TestScripts\hello_world_variable.e
 	EndProjectSection
 EndProject
 Global

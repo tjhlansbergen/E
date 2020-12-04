@@ -65,6 +65,13 @@ namespace EInterpreter.Engine
                             _stack.Add(result);
                         }
                         break;
+                    case EDeclaration declaration:
+                        {
+                            var var = new Variable(declaration.Prop.Type, null, scope);
+                            var.Name = declaration.Name;
+                            _stack.Add(var);
+                        }
+                        break;
                     case EReturn returnStatement:
                     {
                         var result = _expandParameter(returnStatement.Parameter);
@@ -77,14 +84,16 @@ namespace EInterpreter.Engine
             // by now, we should have come across at least one return statement, if not that's an error
             _stack.RemoveAll(v => v.Scope == scope);
             throw new EngineException($"Function {function.Name} exited without return statement.");
-            //return new Variable(EBuildIn.Types.Boolean.ToString(), true); // TODO, use the function's return statement(s)
+
         }
 
         private Variable _handleFunctionCall(EFunctionCall call)
         {
+            var parameters = call.Parameters.Select(_expandParameter).ToList();
+
             // try as non-build-in function first, this way the user can hide build-in functions if desired
             var localFunction = _tree.Functions.SingleOrDefault(f => f.Name == call.FullName);
-            var parameters = call.Parameters.Select(_expandParameter).ToList();
+            
 
             // if we found a matching function, and it's parameters match, then run it
             if (localFunction != null && EngineHelpers.MatchAndNameParameters(parameters, localFunction))
@@ -98,7 +107,7 @@ namespace EInterpreter.Engine
             if (targetParameters != null && EngineHelpers.MatchParameters(parameters, targetParameters))
             {
                 // we have match for a build in function, run it
-                return Modules.Run(call.Parent, call.Name, call.Parameters.Select(p => _expandParameter(p).Value).ToArray());    // TODO parameters as EBuild-in Types (legal since objects are not allowed here), currently most likely only strings/text will resolve correctly 
+                return Modules.Run(call.Parent, call.Name, parameters.ToArray());
             }
 
             // TODO we should raise an error if we didn't find anything suitable to run
@@ -112,13 +121,13 @@ namespace EInterpreter.Engine
             // determine the type step by step
 
             // is it true/false?
-            if (bool.TryParse(parameter, out bool boolean)) { return new Variable(Types.Boolean.ToString(), boolean); }  //TODO get type string from its build-in type
+            if (bool.TryParse(parameter, out bool boolean)) { return new Variable(Types.Boolean.ToString(), boolean); }
 
             // is it a literal double?
-            if (double.TryParse(parameter, out double number)) { return new Variable(Types.Number.ToString(), number); }   //TODO get type string from its build-in type
+            if (double.TryParse(parameter, out double number)) { return new Variable(Types.Number.ToString(), number); }
 
             // is it a string-literal
-            if (parameter.StartsWith("\"") && parameter.EndsWith("\"")) { return new Variable(Types.Text.ToString(), parameter.Replace("\"", "")); }   //TODO get type string from its build-in type
+            if (parameter.StartsWith("\"") && parameter.EndsWith("\"")) { return new Variable(Types.Text.ToString(), parameter.Replace("\"", "")); }
 
             // we don't support inline-lists (yet), no need to check for that
 

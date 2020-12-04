@@ -41,7 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Boolean.cs" />
     <Compile Include="Console.cs" />
+    <Compile Include="Number.cs" />
+    <Compile Include="Text.cs" />
     <Compile Include="Types.cs" />
     <Compile Include="Variable.cs" />
     <Compile Include="Modules.cs" />

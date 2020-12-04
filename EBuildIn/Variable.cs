@@ -6,7 +6,7 @@ namespace EBuildIn
     {
         public string Name { get; set; }
         public string Type { get; private set; }
-        public object Value { get; private set; }
+        public object Value { get; set; }
         public string Scope { get; set; }
 
         public static Variable Empty => new Variable(string.Empty, null, string.Empty);  //TODO is there a valid use case for this?

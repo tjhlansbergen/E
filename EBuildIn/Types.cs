@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EBuildIn
+﻿namespace EBuildIn
 {
     public enum Types
     {
         Boolean,
         Number,
-        Text
+        Text,
+        Variable
         //TODO List<>
     }
 }
