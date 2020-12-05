@@ -57,6 +57,7 @@
     <Compile Include="EElements\EReturn.cs" />
     <Compile Include="EElements\EStatement.cs" />
     <Compile Include="EElements\EUtility.cs" />
+    <Compile Include="EElements\IRunnableBlock.cs" />
     <Compile Include="Engine\Engine.cs" />
     <Compile Include="Engine\EngineHelpers.cs" />
     <Compile Include="Validation\PostValidationSteps.cs" />

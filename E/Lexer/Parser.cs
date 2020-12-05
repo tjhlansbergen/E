@@ -142,14 +142,21 @@ namespace EInterpreter.Lexer
 
         private void _handleStatement(EToken token)
         {
-            if (_callStack.Any() && _callStack.Peek() is EFunction func)
+            if (_callStack.Any() && (_callStack.Peek() is EFunction || _callStack.Peek() is EStatement))
             {
                 EStatement statement;
 
                 try { statement = Parsers.ParseStatement(token.Line); }
                 catch { throw new ParserException(_unparsebleMessage("statement", token.LineNumber)); }
 
-                func.Elements.Add(statement);
+                if (_callStack.Peek() is EFunction func)
+                {
+                    func.Elements.Add(statement);
+                }
+                else if (_callStack.Peek() is EStatement stat)
+                {
+                    stat.Elements.Add(statement);
+                }
                 _callStack.Push(statement);
             }
             else
@@ -160,14 +167,21 @@ namespace EInterpreter.Lexer
 
         private void _handleDeclaration(EToken token)
         {
-            if (_callStack.Any() && _callStack.Peek() is EFunction func)
+            if (_callStack.Any() && (_callStack.Peek() is EFunction || _callStack.Peek() is EStatement))
             {
                 EDeclaration init;
 
                 try { init = Parsers.ParseDeclaration(token.Line); }
                 catch { throw new ParserException(_unparsebleMessage("object declaration", token.LineNumber)); }
 
-                func.Elements.Add(init);
+                if (_callStack.Peek() is EFunction func)
+                {
+                    func.Elements.Add(init);
+                }
+                else if (_callStack.Peek() is EStatement stat)
+                {
+                    stat.Elements.Add(init);
+                }
             }
             else
             {

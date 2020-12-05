@@ -44,18 +44,19 @@ namespace EInterpreter.Engine
             var args = new List<Variable>();
 
             // find and run the singular Start Function, in the singular Program Utility
-            Result = (bool)_runFunction(_tree.Utilities.Single(u => u.Name == "Program").Functions.Single(f => f.Name == "Program.Start"), args).Value;
+            Result = (bool)_runBlock(_tree.Utilities.Single(u => u.Name == "Program").Functions.Single(f => f.Name == "Program.Start"), args).Value;
         }
 
-        private Variable _runFunction(EFunction function, List<Variable> variables)
+        private Variable _runBlock(IRunnableBlock block, List<Variable> variables)
         {
-            var scope = function.Name;
+            var scope = block.Name;
             variables.ForEach(v => v.Scope = scope);
             _stack.AddRange(variables);
 
-
-            foreach (var element in function.Elements)
+            for (var i = 0; i < block.Elements.Count; i++)
             {
+                var element = block.Elements[i];
+
                 switch (element)
                 {
                     case EFunctionCall functionCall:
@@ -73,18 +74,51 @@ namespace EInterpreter.Engine
                         }
                         break;
                     case EReturn returnStatement:
-                    {
-                        var result = _expandParameter(returnStatement.Parameter);
-                        _stack.RemoveAll(v => v.Scope == scope);
-                        return result;
-                    }
+                        {
+                            var result = _expandParameter(returnStatement.Parameter);
+                            _stack.RemoveAll(v => v.Scope == scope);
+                            return result;
+                        }
+
+                    case EStatement statement:
+                        {
+                            var result = _handleStatement(statement);
+                            if (!result.IsEmpty)
+                            {
+                                _stack.RemoveAll(v => v.Scope == scope);
+                                return result;
+                            }
+                        }
+                        break;
                 }
             }
 
-            // by now, we should have come across at least one return statement, if not that's an error
             _stack.RemoveAll(v => v.Scope == scope);
-            throw new EngineException($"Function {function.Name} exited without return statement.");
 
+            if (block is EStatement)
+            {
+                // statements can finish without returning something, we return a dummy that's get ignored by the parent/caller
+                return Variable.Empty;
+            }
+            else
+            {
+                // by now, we should have come across at least one return statement, if not that's an error
+                throw new EngineException($"Function {block.Name} exited without return statement.");
+            }
+        }
+
+        private Variable _handleStatement(EStatement statement)
+        {
+            // TODO evaluate the statement
+
+            // we recursively call _runBlock, as if running a function, but empty set of parameters
+            // the return value will be empty, if the statement completed, signaling we can continue,
+            // or has a value, signaling we encountered a return inside the statement.
+            var result = _runBlock(statement, new List<Variable>());
+
+            // TODO start again (while)?
+
+            return result;
         }
 
         private Variable _handleFunctionCall(EFunctionCall call)
@@ -93,12 +127,12 @@ namespace EInterpreter.Engine
 
             // try as non-build-in function first, this way the user can hide build-in functions if desired
             var localFunction = _tree.Functions.SingleOrDefault(f => f.Name == call.FullName);
-            
+
 
             // if we found a matching function, and it's parameters match, then run it
             if (localFunction != null && EngineHelpers.MatchAndNameParameters(parameters, localFunction))
             {
-                return _runFunction(localFunction, parameters.ToList());
+                return _runBlock(localFunction, parameters.ToList());
             }
 
             // check if we have a build-in function, and get it's parameters

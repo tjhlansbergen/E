@@ -44,7 +44,7 @@ namespace EInterpreter
 
         private void _preValidate()
         {
-            Extensions.WriteColoredLine("Pre-validation: ", ConsoleColor.Blue);
+            Extensions.WriteColoredLine("Pre-validation: ", ConsoleColor.DarkCyan);
 
             var validator = new PreValidator(new List<IPreValidationStep>
             {
@@ -65,7 +65,7 @@ namespace EInterpreter
             {
                 foreach (var validationStepResult in validator.Results)
                 {
-                    Extensions.WriteColoredLine(" - " + validationStepResult.Output, validationStepResult.Valid ? ConsoleColor.Green : ConsoleColor.Red);
+                    Extensions.WriteColoredLine(" - " + validationStepResult.Output, validationStepResult.Valid ? ConsoleColor.DarkGreen : ConsoleColor.Red);
                 }
             }
 
@@ -77,7 +77,7 @@ namespace EInterpreter
 
         private void _lex()
         {
-            Extensions.WriteColoredLine("Lexing: ", ConsoleColor.Blue);
+            Extensions.WriteColoredLine("Lexing: ", ConsoleColor.DarkCyan);
             _tree = new Lexer.Lexer().GetTree(_lines);
             if (_tree != null)
             {
@@ -91,7 +91,7 @@ namespace EInterpreter
 
         private void _postValidate()
         {
-            Extensions.WriteColoredLine("Post-validation: ", ConsoleColor.Blue);
+            Extensions.WriteColoredLine("Post-validation: ", ConsoleColor.DarkCyan);
             var validator = new PostValidator(new List<IPostValidationStep>
             {
                 new GlobalIdentifiersAreUnique(),
@@ -105,7 +105,7 @@ namespace EInterpreter
             {
                 foreach (var validationStepResult in validator.Results)
                 {
-                    Extensions.WriteColoredLine(" - " + validationStepResult.Output, validationStepResult.Valid ? ConsoleColor.Green : ConsoleColor.Red);
+                    Extensions.WriteColoredLine(" - " + validationStepResult.Output, validationStepResult.Valid ? ConsoleColor.DarkGreen : ConsoleColor.Red);
                 }
             }
 

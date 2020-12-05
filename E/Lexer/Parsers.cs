@@ -78,7 +78,7 @@ namespace EInterpreter.Lexer
 
             if(lineArr.Length != 2 || !Enum.TryParse<EStatementType>(lineArr[0], true, out _)) { throw new ParserException("Unparsable statement"); }
 
-            return new EStatement("some name"); // TODO 
+            return new EStatement(Guid.NewGuid().ToString()); 
         }
 
         public static EDeclaration ParseDeclaration(string line)

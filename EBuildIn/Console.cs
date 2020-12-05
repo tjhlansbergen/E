@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace EBuildIn
 {
@@ -8,7 +9,12 @@ namespace EBuildIn
 
         public static Variable WriteLine(Variable line)
         {
-            System.Console.WriteLine(line.Value);
+            var currentColor = System.Console.ForegroundColor;
+            System.Console.ForegroundColor = ConsoleColor.DarkYellow;
+            System.Console.WriteLine("| " + line.Value);
+            System.Console.ForegroundColor = currentColor;
+
+            
 
             return new Variable(Types.Boolean.ToString(), true);
         }

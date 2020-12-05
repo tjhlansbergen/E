@@ -115,6 +115,7 @@ namespace EInterpreterTests
 
             // assert
             Assert.IsNotNull(result);
+            Assert.IsTrue(Guid.TryParse(result.Name, out _));
             Assert.IsInstanceOfType(result, typeof(EStatement));
         }
 
