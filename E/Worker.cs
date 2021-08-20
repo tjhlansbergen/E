@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.InteropServices;
-using EInterpreter.Engine;
 using EInterpreter.EObjects;
-using EInterpreter.Lexer;
 using EInterpreter.Validation;
 
 namespace EInterpreter

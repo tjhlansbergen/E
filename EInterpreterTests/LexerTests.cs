@@ -1,6 +1,5 @@
 ﻿using EInterpreter.Lexer;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Linq;
 
 namespace EInterpreterTests
 {

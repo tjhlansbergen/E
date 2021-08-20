@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using EInterpreter.EObjects;
+﻿using System.Collections.Generic;
 
 namespace EInterpreter.EElements
 {

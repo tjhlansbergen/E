@@ -1,5 +1,4 @@
 ﻿using EInterpreter.EObjects;
-using System;
 using System.Collections.Generic;
 
 namespace EInterpreter.Lexer

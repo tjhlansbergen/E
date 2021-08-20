@@ -1,10 +1,8 @@
-﻿using System;
-using System.Diagnostics;
+﻿using EInterpreter;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using EInterpreter;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace EInterpreterTests
 {

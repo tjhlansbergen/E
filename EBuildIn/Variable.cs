@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace EBuildIn
+﻿namespace EBuildIn
 {
     public class Variable
     {

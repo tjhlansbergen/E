@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.Serialization.Formatters;
 using EInterpreter;
 using EInterpreter.EElements;
 using EInterpreter.Lexer;

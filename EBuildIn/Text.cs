@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace EBuildIn
 {
@@ -6,10 +7,23 @@ namespace EBuildIn
     {
         public static List<string> SetParameters => new List<string> { Types.Text.ToString(), Types.Text.ToString() };
 
-        public static Variable Set(Variable var, Variable text)
+        public static Variable Set(Variable var, Variable value)
         {
-            var.Value = text.Value;
-            return new Variable(Types.Boolean.ToString(), true);
+            if (value.Value is string)
+            {
+                var.Value = value.Value;
+                return new Variable(Types.Boolean.ToString(), true);
+            }
+
+            try
+            {
+                var.Value = value.Value.ToString();
+                return new Variable(Types.Boolean.ToString(), true);
+            }
+            catch (Exception)
+            {
+                return new Variable(Types.Boolean.ToString(), false);
+            }
         }
     }
 }

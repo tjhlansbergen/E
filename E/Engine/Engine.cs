@@ -4,11 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using EBuildIn;
 using EInterpreter.Lexer;
-using Console = System.Console;
 
 namespace EInterpreter.Engine
 {

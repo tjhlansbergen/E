@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using EInterpreter.EElements;
 using EInterpreter.EObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -24,6 +23,31 @@ namespace EInterpreterTests
             Assert.ThrowsException<EInterpreter.EngineException>(() => engine.Run(tree));
         }
 
-        // TODO (1) should succeed test (nb full scripts should be tested in WorkerTests
+        [TestMethod]
+        public void RunShouldSucceed()
+        {
+            // arrange
+            var engine = new EInterpreter.Engine.Engine();
+
+            var tree = new ETree
+            {
+                Utilities = new List<EUtility>
+                {
+                    new EUtility("Program")
+                    {
+                        Functions = new List<EFunction>
+                        {
+                            new EFunction("Boolean", "Program.Start", new List<EProperty> {new EProperty("Text", "arguments")})
+                            {
+                                Elements = { new EReturn("", "true")}
+                            }
+                        }
+                    }
+                }
+            };
+
+            // act
+            engine.Run(tree);
+        }
     }
 }

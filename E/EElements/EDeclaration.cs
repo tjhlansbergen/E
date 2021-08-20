@@ -1,6 +1,4 @@
-﻿using EInterpreter.EObjects;
-
-namespace EInterpreter.EElements
+﻿namespace EInterpreter.EElements
 {
     public class EDeclaration : EElement
     {

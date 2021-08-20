@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using EInterpreter.EObjects;
 
 namespace EInterpreter.EElements
 {
