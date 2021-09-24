@@ -50,10 +50,8 @@ namespace EInterpreter.Engine
             variables.ForEach(v => v.Scope = scope);
             _stack.AddRange(variables);
 
-            for (var i = 0; i < block.Elements.Count; i++)
+            foreach (var element in block.Elements)
             {
-                var element = block.Elements[i];
-
                 switch (element)
                 {
                     case EFunctionCall functionCall:
@@ -76,7 +74,6 @@ namespace EInterpreter.Engine
                             _stack.RemoveAll(v => v.Scope == scope);
                             return result;
                         }
-
                     case EStatement statement:
                         {
                             var result = _handleStatement(statement);
