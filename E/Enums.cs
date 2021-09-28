@@ -16,7 +16,7 @@
         PROPERTY = 8,
         DECLARATION = 9,
         FUNCTION_CALL = 10,
-        FUNCTION_STATEMENT = 11,     //if, for, etc...
+        FUNCTION_STATEMENT = 11,     //if, while, etc...
         FUNCTION_RETURN = 12
         ,
     }
@@ -24,6 +24,7 @@
     public enum EStatementType
     {
         IF,
-        FOREACH
+        FOREACH,
+        WHILE
     }
 }

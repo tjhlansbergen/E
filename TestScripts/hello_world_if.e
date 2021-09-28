@@ -6,7 +6,7 @@ Utility Program
 	{
 		Console:WriteLine("Before if");
 		
-		if(true)
+		if(false)
 		{
 			Console:WriteLine("in if!");
 			return true;

@@ -76,9 +76,9 @@ namespace EInterpreter.Lexer
         {
             var lineArr = line.SplitClean(')')[0].SplitClean('(');
 
-            if(lineArr.Length != 2 || !Enum.TryParse<EStatementType>(lineArr[0], true, out _)) { throw new ParserException("Unparsable statement"); }
-
-            return new EStatement(Guid.NewGuid().ToString()); 
+            if(lineArr.Length != 2 || !Enum.TryParse<EStatementType>(lineArr[0], true, out EStatementType type)) { throw new ParserException("Unparsable statement"); }
+            
+            return new EStatement(Guid.NewGuid().ToString(), type, lineArr[1]); 
         }
 
         public static EDeclaration ParseDeclaration(string line)

@@ -28,6 +28,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestScripts", "TestScripts"
 		TestScripts\hello_world_variable.e = TestScripts\hello_world_variable.e
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{2AA713A8-D24D-44FD-93F7-08E22D6E6469}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{03625C62-2665-4278-8EF2-B540994FFE99} = {2AA713A8-D24D-44FD-93F7-08E22D6E6469}
+		{561A68B5-8C30-4932-B92B-D87246142E1A} = {2AA713A8-D24D-44FD-93F7-08E22D6E6469}
+		{D490A793-1DBF-40B6-B0EB-336B0B92F2A1} = {2AA713A8-D24D-44FD-93F7-08E22D6E6469}
+		{E2EF3181-2FBD-4C56-BB85-CD06A56A4C11} = {2AA713A8-D24D-44FD-93F7-08E22D6E6469}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {67F00204-361E-4D0C-8FB4-A9E41B9F446A}

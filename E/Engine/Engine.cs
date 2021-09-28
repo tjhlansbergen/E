@@ -76,7 +76,7 @@ namespace EInterpreter.Engine
                         }
                     case EStatement statement:
                         {
-                            var result = _handleStatement(statement);
+                            var result = _handleStatement(statement, scope);
                             if (!result.IsEmpty)
                             {
                                 _stack.RemoveAll(v => v.Scope == scope);
@@ -101,9 +101,19 @@ namespace EInterpreter.Engine
             }
         }
 
-        private Variable _handleStatement(EStatement statement)
+        private Variable _handleStatement(EStatement statement, string scope)
         {
-            // TODO evaluate the statement
+            // evaluate
+
+            var evaluation = _expandParameter(statement.EvaluableVariableName);
+
+            if(!Enum.TryParse<Types>(evaluation.Type, out Types type)) throw new EngineException($"Statement {statement.Name} of type {statement.Type} in {scope} has unparsable variable type: {evaluation.Type}");
+            if(type != Types.Boolean) throw new EngineException($"Variable for {statement.Type} statement {statement.Name} in {scope} is of type {type}, but a {Types.Boolean} was expected");
+
+            if ((bool)evaluation.Value != true)
+            {
+                return Variable.Empty;
+            }
 
             // we recursively call _runBlock, as if running a function, but empty set of parameters
             // the return value will be empty, if the statement completed, signaling we can continue,

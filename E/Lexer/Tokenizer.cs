@@ -27,7 +27,7 @@ namespace EInterpreter.Lexer
                 }
                 else
                 {
-                    // WARNING
+                    // TODO WARNING
                 }
             }
 
