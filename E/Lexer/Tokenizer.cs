@@ -131,6 +131,12 @@ namespace EInterpreter.Lexer
                         }
 
                         break;
+                    case ETokenType.ASSIGNMENT:
+                        if (line.SplitClean('=').Length == 2)
+                        {
+                            return new EToken(linenr, ETokenType.ASSIGNMENT, line);
+                        }
+                        break;
                     default:
                         return null;
                 }

@@ -84,6 +84,11 @@ namespace EInterpreter.Engine
                             }
                         }
                         break;
+                    case EAssignment assignment:
+                        {
+                            _handleAssignment(assignment, scope);
+                        }
+                        break;
                 }
             }
 
@@ -101,14 +106,31 @@ namespace EInterpreter.Engine
             }
         }
 
+        private void _handleAssignment(EAssignment assignment, string scope)
+        {
+            var result = _expandParameter(assignment.Parameter);
+            result.Name = assignment.Name;
+            result.Scope = scope;
+
+            var existingVariable = _stack.FirstOrDefault(v => v.Scope == result.Scope && v.Name == result.Name);
+            if (existingVariable != null)
+            {
+                existingVariable.Value = result.Value;
+            }
+            else
+            {
+                _stack.Add(result);
+            }
+        }
+
         private Variable _handleStatement(EStatement statement, string scope)
         {
             // evaluate
 
             var evaluation = _expandParameter(statement.EvaluableVariableName);
 
-            if(!Enum.TryParse<Types>(evaluation.Type, out Types type)) throw new EngineException($"Statement {statement.Name} of type {statement.Type} in {scope} has unparsable variable type: {evaluation.Type}");
-            if(type != Types.Boolean) throw new EngineException($"Variable for {statement.Type} statement {statement.Name} in {scope} is of type {type}, but a {Types.Boolean} was expected");
+            if (!Enum.TryParse<Types>(evaluation.Type, out Types type)) throw new EngineException($"Statement {statement.Name} of type {statement.Type} in {scope} has unparsable variable type: {evaluation.Type}");
+            if (type != Types.Boolean) throw new EngineException($"Variable for {statement.Type} statement {statement.Name} in {scope} is of type {type}, but a {Types.Boolean} was expected");
 
             if ((bool)evaluation.Value != true)
             {

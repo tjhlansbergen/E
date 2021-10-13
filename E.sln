@@ -20,6 +20,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestScripts", "TestScripts", "{E2EF3181-2FBD-4C56-BB85-CD06A56A4C11}"
 	ProjectSection(SolutionItems) = preProject
 		TestScripts\hello_world.e = TestScripts\hello_world.e
+		TestScripts\hello_world_assignment.e = TestScripts\hello_world_assignment.e
 		TestScripts\hello_world_constant.e = TestScripts\hello_world_constant.e
 		TestScripts\hello_world_function.e = TestScripts\hello_world_function.e
 		TestScripts\hello_world_if.e = TestScripts\hello_world_if.e

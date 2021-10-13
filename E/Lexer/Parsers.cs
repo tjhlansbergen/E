@@ -133,5 +133,11 @@ namespace EInterpreter.Lexer
             var parameter = line.SplitClean(';')[0].Remove(0, "return ".Length);
             return new EReturn("", parameter);
         }
+
+        public static EAssignment ParseAssignment(string line)
+        {
+            if(!line.Contains("=")) { throw new ParserException("Unparseble assignment"); }
+            return new EAssignment(line.SplitClean('=')[0].Trim(), line.SplitClean('=')[1].SplitClean(';')[0].Trim());
+        }
     }
 }

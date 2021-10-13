@@ -76,6 +76,9 @@ namespace EInterpreter.Lexer
                 case ETokenType.FUNCTION_RETURN:
                     _handleFunctionReturn(token);
                     break;
+                case ETokenType.ASSIGNMENT:
+                    _handleAssignment(token);
+                    break;
                 default:
                     throw new ParserException($"Unhandled token type {token.Type} at line: {token.LineNumber}");
             }
@@ -182,6 +185,31 @@ namespace EInterpreter.Lexer
             else
             {
                 throw new ParserException(_unexpectedMessage("object declaration", token.LineNumber));
+            }
+        }
+
+
+        private void _handleAssignment(EToken token)
+        {
+            if (_callStack.Any() && (_callStack.Peek() is EFunction || _callStack.Peek() is EStatement))
+            {
+                EAssignment assign;
+
+                try { assign = Parsers.ParseAssignment(token.Line); }
+                catch { throw new ParserException(_unparsebleMessage("assignment", token.LineNumber)); }
+
+                if (_callStack.Peek() is EFunction func)
+                {
+                    func.Elements.Add(assign);
+                }
+                else if (_callStack.Peek() is EStatement stat)
+                {
+                    stat.Elements.Add(assign);
+                }
+            }
+            else
+            {
+                throw new ParserException(_unexpectedMessage("assignment", token.LineNumber));
             }
         }
 

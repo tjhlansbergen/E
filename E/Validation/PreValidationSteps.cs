@@ -274,4 +274,30 @@ namespace EInterpreter.Validation
             }
         }
     }
+
+    public class AssignemtnsOk : IPreValidationStep
+    {
+        public ValidationStepResult Execute(string[] lines)
+        {
+            var errors = new List<int>();
+            var assignment = lines.Where(ln => ln.Contains("=")).ToArray();
+
+            for (int i = 0; i < assignment.Length; i++)
+            {
+                if (assignment[i].SplitClean('=').Length != 2)
+                {
+                    errors.Add(i + 1);
+                }
+            }
+
+            if (!errors.Any())
+            {
+                return new ValidationStepResult(true, "All assignments are OK");
+            }
+            else
+            {
+                return new ValidationStepResult(false, $"Improper assignment on line(s): {string.Join(" ", errors)}");
+            }
+        }
+    }
 }

@@ -17,8 +17,8 @@
         DECLARATION = 9,
         FUNCTION_CALL = 10,
         FUNCTION_STATEMENT = 11,     //if, while, etc...
-        FUNCTION_RETURN = 12
-        ,
+        FUNCTION_RETURN = 12,
+        ASSIGNMENT = 13
     }
 
     public enum EStatementType

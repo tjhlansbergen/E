@@ -53,7 +53,8 @@ namespace EInterpreter
                 new BlockOpeningsOk(),
                 new BlockDeclarationsOk(),
                 new ConstantsOk(),
-                new PropertiesOk()
+                new PropertiesOk(),
+                new AssignemtnsOk(),
             });
                 
             var preValidationResult = validator.Validate(_lines);

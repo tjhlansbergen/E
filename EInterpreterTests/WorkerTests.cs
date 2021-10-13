@@ -58,6 +58,7 @@ namespace EInterpreterTests
         [DataRow(new[] { "Hello World!" }, "hello_world_parameter.e")]
         [DataRow(new[] { "Hello World!" }, "hello_world_return.e")]
         [DataRow(new[] { "Hello World!" }, "hello_world_variable.e")]
+        [DataRow(new[] { "Hello World!" }, "hello_world_assignment.e")]
         public void TestWorkerFullScripts(string[] shouldContain, string name)
         {
             // arrange
