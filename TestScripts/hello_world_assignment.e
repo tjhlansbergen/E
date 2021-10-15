@@ -4,11 +4,11 @@ Utility Program
 {
 	Function Boolean Start(Text arguments)
 	{
-		new Text lineToWrite;
+		Text lineToWrite;
 		
 		lineToWrite = "Hello World!";		
 
-		Console:WriteLine(lineToWrite);
+		Console:WriteText(lineToWrite);
 		return true;
 	}
 }

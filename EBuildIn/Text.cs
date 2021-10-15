@@ -5,19 +5,19 @@ namespace EBuildIn
 {
     public static class Text
     {
-        public static List<string> SetParameters => new List<string> { Types.Text.ToString(), Types.Text.ToString() };
+        public static List<string> AppendParameters => new List<string> { Types.Text.ToString(), Types.Text.ToString() };
 
-        public static Variable Set(Variable var, Variable value)
+        public static Variable Append(Variable var, Variable value)
         {
             if (value.Value is string)
             {
-                var.Value = value.Value;
+                var.Value += value.Value.ToString();
                 return new Variable(Types.Boolean.ToString(), true);
             }
 
             try
             {
-                var.Value = value.Value.ToString();
+                var.Value += value.Value.ToString();
                 return new Variable(Types.Boolean.ToString(), true);
             }
             catch (Exception)

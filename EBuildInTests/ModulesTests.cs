@@ -10,7 +10,7 @@ namespace EBuildInTests
         public void TestFindFound()
         {
             // act
-            var result = EBuildIn.Modules.FindFunctionAndReturnParameters("Console", "WriteLine");
+            var result = EBuildIn.Modules.FindFunctionAndReturnParameters("Console", "WriteText");
 
             // assert
             Assert.AreEqual(1, result.Count);

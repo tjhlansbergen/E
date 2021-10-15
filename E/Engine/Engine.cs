@@ -170,8 +170,7 @@ namespace EInterpreter.Engine
                 return Modules.Run(call.Parent, call.Name, parameters.ToArray());
             }
 
-            // TODO we should raise an error if we didn't find anything suitable to run
-            return new Variable(Types.Text.ToString(), false);
+            throw new EngineException($"Invalid function call: {call.FullName}");
         }
 
 
