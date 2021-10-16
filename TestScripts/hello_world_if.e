@@ -6,7 +6,7 @@ Utility Program
 	{
 		Console:WriteText("Before if");
 
-		Boolean enterIf;
+		new Boolean enterIf;
 
 		enterIf = false;
 		

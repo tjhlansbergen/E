@@ -4,7 +4,7 @@ Utility Program
 {
 	Function Boolean Start(Text arguments)
 	{
-		Number someNumber;
+		new Number someNumber;
 		
 		someNumber = 42;
 		Console:WriteNumber(someNumber);

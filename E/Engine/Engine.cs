@@ -119,7 +119,8 @@ namespace EInterpreter.Engine
             }
             else
             {
-                _stack.Add(result);
+                // don't add to non existing variable, that would be weak typing
+                throw new EngineException($"Attempt to assign value to non-existing variable: {assignment.Name}");
             }
         }
 

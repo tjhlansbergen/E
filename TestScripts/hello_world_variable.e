@@ -4,7 +4,7 @@ Utility Program
 {
 	Function Boolean Start(Text arguments)
 	{
-		Text lineToWrite;
+		new Text lineToWrite;
 
 		lineToWrite = "Hello World";
 		Console:WriteText(lineToWrite);
