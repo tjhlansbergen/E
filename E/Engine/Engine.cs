@@ -128,7 +128,7 @@ namespace EInterpreter.Engine
         {
             // evaluate
 
-            var evaluation = _expandParameter(statement.EvaluableVariableName);
+            var evaluation = _expandParameter(statement.Evaluable);
 
             if (!Enum.TryParse<Types>(evaluation.Type, out Types type)) throw new EngineException($"Statement {statement.Name} of type {statement.Type} in {scope} has unparsable variable type: {evaluation.Type}");
             if (type != Types.Boolean) throw new EngineException($"Variable for {statement.Type} statement {statement.Name} in {scope} is of type {type}, but a {Types.Boolean} was expected");
