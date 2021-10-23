@@ -17,8 +17,8 @@
         PROPERTY = 8,
         DECLARATION = 9,
         ASSIGNMENT = 10,
-        FUNCTION_CALL = 11,
-        FUNCTION_STATEMENT = 12,     //if, while, etc...
+        FUNCTION_STATEMENT = 11, //if, while, etc...
+        FUNCTION_CALL = 12,
         FUNCTION_RETURN = 13,
         
     }

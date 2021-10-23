@@ -60,6 +60,7 @@ namespace EInterpreterTests
         [DataRow(new[] { "Hello World!" }, "hello_world_variable.e")]
         [DataRow(new[] { "Hello World!" }, "hello_world_assignment.e")]
         [DataRow(new[] { "Hello World!" }, "hello_world_if.e")]
+        [DataRow(new[] { "Hello World!" }, "hello_world_while.e")]
         [DataRow(new[] { "63" }, "number_addition.e")]
         [DataRow(new[] { "8" }, "number_calculus.e")]
         [DataRow(new[] { "Hello World!" }, "number_equality.e")]

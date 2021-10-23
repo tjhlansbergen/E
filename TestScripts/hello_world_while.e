@@ -17,15 +17,13 @@ Utility Program
 			Console:WriteNumber(count);
 			Number:Add(count, 1);
 
-			new Boolean equal;
-			equal = Number:AreEqual(count, 10);
+			//new Boolean equal;
+			//equal = Number:AreEqual(count, 10);
 			
-			if(equal)
+			if(Number:AreEqual(count, 10))
 			{
 				keepLooping = false;
-			}
-
-			// TODO: allow function call in if/while evaluation (parse issue?)			
+			}		
 		}
 
 		Console:WriteText("Hello World!");
