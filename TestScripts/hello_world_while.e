@@ -17,13 +17,21 @@ Utility Program
 			Console:WriteNumber(count);
 			Number:Add(count, 1);
 
-			//new Boolean equal;
-			//equal = Number:AreEqual(count, 10);
-			
 			if(Number:AreEqual(count, 10))
 			{
 				keepLooping = false;
 			}		
+		}
+
+		Console:WriteText("---------------");
+
+		new Number count2;
+		count2 = 5;
+
+		while(Number:LessThen(count2, 15))
+		{
+			Console:WriteNumber(count2);
+			Number:Add(count2, 2);
 		}
 
 		Console:WriteText("Hello World!");
