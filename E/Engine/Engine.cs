@@ -112,7 +112,7 @@ namespace EInterpreter.Engine
             result.Name = assignment.Name;
             result.Scope = scope;
 
-            var existingVariable = _stack.FirstOrDefault(v => v.Scope == result.Scope && v.Name == result.Name);
+            var existingVariable = _stack.FirstOrDefault(v => v.Name == result.Name);
             if (existingVariable != null)
             {
                 existingVariable.Value = result.Value;
@@ -127,23 +127,27 @@ namespace EInterpreter.Engine
         private Variable _handleStatement(EStatement statement, string scope)
         {
             // evaluate
-
             var evaluation = _expandParameter(statement.Evaluable);
 
-            if (!Enum.TryParse<Types>(evaluation.Type, out Types type)) throw new EngineException($"Statement {statement.Name} of type {statement.Type} in {scope} has unparsable variable type: {evaluation.Type}");
-            if (type != Types.Boolean) throw new EngineException($"Variable for {statement.Type} statement {statement.Name} in {scope} is of type {type}, but a {Types.Boolean} was expected");
+            if (!Enum.TryParse<Types>(evaluation.Type, out Types type)) throw new EngineException($"Statement of type {statement.Type} in {scope} has unparsable variable type: {evaluation.Type}");
+            if (type != Types.Boolean) throw new EngineException($"Variable for {statement.Type} statement in {scope} is of type {type}, but a {Types.Boolean} was expected");
+            if (evaluation.Value == null) throw new EngineException($"Variable for {statement.Type} statement in {scope} is unassigned");
 
             if ((bool)evaluation.Value != true)
             {
                 return Variable.Empty;
             }
 
-            // we recursively call _runBlock, as if running a function, but empty set of parameters
+            // call _runBlock, as if running a function, but empty set of parameters
             // the return value will be empty, if the statement completed, signaling we can continue,
             // or has a value, signaling we encountered a return inside the statement.
             var result = _runBlock(statement, new List<Variable>());
 
-            // TODO start again (while)?
+            // only continue the while if result is empty (meaning a return was not encountered)
+            if (statement.Type == EStatementType.WHILE && result.IsEmpty)
+            {
+                _handleStatement(statement, scope);
+            }
 
             return result;
         }

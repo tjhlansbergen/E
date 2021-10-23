@@ -110,31 +110,28 @@ namespace EInterpreter.Lexer
                         }
 
                         break;
+                    case ETokenType.ASSIGNMENT:
+                        if (line.SplitClean('=').Length == 2)
+                        {
+                            return new EToken(linenr, ETokenType.ASSIGNMENT, line);
+                        }
+                        break;
                     case ETokenType.FUNCTION_CALL:
                         if (line.SplitClean(':', 2).Length == 2)
                         {
                             return new EToken(linenr, ETokenType.FUNCTION_CALL, line);
                         }
-
                         break;
                     case ETokenType.FUNCTION_STATEMENT:
                         if (line.SplitClean('(').Length > 1 && Enum.TryParse<EStatementType>(line.SplitClean('(')[0], true, out _))
                         {
                             return new EToken(linenr, ETokenType.FUNCTION_STATEMENT, line);
                         }
-
                         break;
                     case ETokenType.FUNCTION_RETURN:
                         if (line.StartsWith("return"))
                         {
                             return new EToken(linenr, ETokenType.FUNCTION_RETURN, line);
-                        }
-
-                        break;
-                    case ETokenType.ASSIGNMENT:
-                        if (line.SplitClean('=').Length == 2)
-                        {
-                            return new EToken(linenr, ETokenType.ASSIGNMENT, line);
                         }
                         break;
                     default:

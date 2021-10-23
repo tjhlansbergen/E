@@ -110,7 +110,8 @@ namespace EInterpreter.Lexer
             }
             else
             {
-                parameterString = rightArr[1].Substring(0, rightArr[1].Length - 2);
+                parameterString = rightArr[1].Replace(';', ' ').Trim();
+                parameterString = parameterString.Substring(0, parameterString.Length - 1);
             }
             
             var parameters = new List<string>();

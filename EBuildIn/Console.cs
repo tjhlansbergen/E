@@ -7,7 +7,7 @@ namespace EBuildIn
     {
         public static List<string> WriteTextParameters => new List<string> { Types.Text.ToString() };
         public static List<string> WriteNumberParameters => new List<string> { Types.Number.ToString() };
-        public static List<string> WriteBooleanParameters => new List<string> { Types.Number.ToString() };
+        public static List<string> WriteBooleanParameters => new List<string> { Types.Boolean.ToString() };
 
         public static Variable WriteText(Variable text)
         {

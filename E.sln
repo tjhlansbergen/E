@@ -27,8 +27,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestScripts", "TestScripts"
 		TestScripts\hello_world_parameter.e = TestScripts\hello_world_parameter.e
 		TestScripts\hello_world_return.e = TestScripts\hello_world_return.e
 		TestScripts\hello_world_variable.e = TestScripts\hello_world_variable.e
+		TestScripts\hello_world_while.e = TestScripts\hello_world_while.e
 		TestScripts\number_addition.e = TestScripts\number_addition.e
 		TestScripts\number_calculus.e = TestScripts\number_calculus.e
+		TestScripts\number_equality.e = TestScripts\number_equality.e
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{2AA713A8-D24D-44FD-93F7-08E22D6E6469}"

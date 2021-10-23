@@ -5,6 +5,7 @@
     /// </summary>
     public enum ETokenType
     {
+        // note, order matters here
         WHITESPACE = 0,
         COMMENT = 1,
         CONSTANT = 2,
@@ -15,10 +16,11 @@
         FUNCTION = 7,
         PROPERTY = 8,
         DECLARATION = 9,
-        FUNCTION_CALL = 10,
-        FUNCTION_STATEMENT = 11,     //if, while, etc...
-        FUNCTION_RETURN = 12,
-        ASSIGNMENT = 13
+        ASSIGNMENT = 10,
+        FUNCTION_CALL = 11,
+        FUNCTION_STATEMENT = 12,     //if, while, etc...
+        FUNCTION_RETURN = 13,
+        
     }
 
     public enum EStatementType

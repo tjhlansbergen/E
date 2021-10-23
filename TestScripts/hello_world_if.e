@@ -21,10 +21,11 @@ Utility Program
 		if(enterIf)
 		{
 			Console:WriteText("in if 2!");
-			return true;
+			//return true;
 		}
 		
 		Console:WriteText("after if!");
+		Console:WriteText("Hello World!");
 		
 		return true;
 	}

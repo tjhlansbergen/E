@@ -10,33 +10,46 @@ namespace EBuildIn
         public static List<string> MultiplyParameters => new List<string> { Types.Number.ToString(), Types.Number.ToString() };
         public static List<string> DivideParameters => new List<string> { Types.Number.ToString(), Types.Number.ToString() };
         public static List<string> RemainderParameters => new List<string> { Types.Number.ToString(), Types.Number.ToString() };
+        public static List<string> AreEqualParameters => new List<string> { Types.Number.ToString(), Types.Number.ToString() };
 
         public static Variable Add(Variable var, Variable value)
         {
-            return Operater(var, value, (x, y) => x + y);
+            return Operator(var, value, (x, y) => x + y);
         }
 
         public static Variable Subtract(Variable var, Variable value)
         {
-            return Operater(var, value, (x, y) => x - y);
+            return Operator(var, value, (x, y) => x - y);
         }
 
         public static Variable Divide(Variable var, Variable value)
         {
-            return Operater(var, value, (x, y) => x / y);
+            return Operator(var, value, (x, y) => x / y);
         }
 
         public static Variable Multiply(Variable var, Variable value)
         {
-            return Operater(var, value, (x, y) => x * y);
+            return Operator(var, value, (x, y) => x * y);
         }
 
         public static Variable Remainder(Variable var, Variable value)
         {
-            return Operater(var, value, (x, y) => x % y);
+            return Operator(var, value, (x, y) => x % y);
         }
 
-        private static Variable Operater(Variable var, Variable value, Func<double, double, double> operate)
+        public static Variable AreEqual(Variable x, Variable y)
+        {
+            if (TryConvertValue(x, out double xx) && TryConvertValue(y, out double yy) && xx == yy)
+            {
+                return new Variable(Types.Boolean.ToString(), true);
+            }
+            else
+            {
+                return new Variable(Types.Boolean.ToString(), false);
+            }
+        }
+
+        private static Variable Operator(Variable var, Variable value, Func<double, double, double> operate)
         {
             if (TryConvertValue(value, out var result))
             {
