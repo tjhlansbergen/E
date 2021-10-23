@@ -67,6 +67,25 @@ namespace EBuildInTests
 
         [TestMethod]
         [DataRow(1.0, 1.0, false)]
+        [DataRow(1.0, 2.0, false)]
+        [DataRow(5.0, 3.0, true)]
+        [DataRow(-5.0, 3.0, false)]
+        public void TestGreaterThen(double a, double b, bool expected)
+        {
+            // arrange
+            var aa = new Variable("Number", a, "TestAdd");
+            var bb = new Variable("Number", b, "TestAdd");
+
+            // act
+            var result = Number.GreaterThen(aa, bb);
+
+            // assert
+            Assert.AreEqual(expected, result.Value);
+            Assert.AreEqual(b, bb.Value);
+        }
+
+        [TestMethod]
+        [DataRow(1.0, 1.0, false)]
         [DataRow(1.0, 2.0, true)]
         [DataRow(5.0, 3.0, true)]
         [DataRow(-5.0, 5.0, true)]

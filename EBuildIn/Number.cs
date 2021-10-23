@@ -52,7 +52,7 @@ namespace EBuildIn
         }
         public static Variable GreaterThen(Variable a, Variable b)
         {
-            return Comparison(a, b, (x, y) => x < y);
+            return Comparison(a, b, (x, y) => x > y);
         }
 
         private static Variable Comparison(Variable x, Variable y, Func<double, double, bool> compare)
